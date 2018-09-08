@@ -9,26 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen">
+        <activity android:name=".controller.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login"/>
+        <activity android:name=".controller.LoginActivity"/>
         <activity
-            android:name=".NavigationBarActivity"
+            android:name=".controller.NavigationBarActivity"
             android:label="@string/title_activity_navigation_bar"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".controller.MainActivity" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".controller.ProfileActivity"
             android:label="@string/title_activity_profile" />
-        <activity android:name=".CategoryActivity" />
-        <activity android:name=".ProjectActivity" />
+        <activity android:name=".controller.CategoryActivity" />
+        <activity android:name=".controller.ProjectActivity" />
         <activity
-            android:name=".HowToActivity"
+            android:name=".controller.HowToActivity"
             android:label="@string/title_activity_how_to"></activity>
     </application>
 

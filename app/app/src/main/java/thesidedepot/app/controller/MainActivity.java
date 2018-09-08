@@ -1,4 +1,4 @@
-package thesidedepot.app;
+package thesidedepot.app.controller;
 //Calendar
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CalendarView;
 import android.widget.Toast;
+
+import thesidedepot.app.R;
 
 public class MainActivity extends AppCompatActivity {
 
