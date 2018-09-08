@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     CompactCalendarView compactCalendarView;
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM - yyyy", Locale.getDefault());
     private TextView month;
+    private ImageButton monthForward, monthBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +44,21 @@ public class MainActivity extends AppCompatActivity {
         month = (TextView) findViewById(R.id.month);
         month.setText(dateFormatMonth.format(Calendar.getInstance().getTime()));
 
+        monthBack = (ImageButton) findViewById(R.id.monthBack);
+        monthForward = (ImageButton) findViewById(R.id.monthForward);
+
         compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view); // get the reference of CalendarView
         compactCalendarView.setFirstDayOfWeek(Calendar.SUNDAY);
         compactCalendarView.setUseThreeLetterAbbreviation(true);
 
-        Event ev1 = new Event(Color.RED, 1477040400000L, "Teachers' Professional Day");
+        Event ev1 = new Event(Color.RED, 1540123200000L, "Teachers' Professional Day");
         compactCalendarView.addEvent(ev1);
 
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
                 Context context = getApplicationContext();
-                if (dateClicked.toString().compareTo("Fri Oct 21 00:00:00 EDT 2016") == 0) {
+                if (dateClicked.toString().compareTo("Sun Oct 21 00:00:00 EDT 2018") == 0) {
                     Toast.makeText(context, "Teachers' Professional Day", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, "No Events Planned for that day", Toast.LENGTH_SHORT).show();
@@ -65,6 +71,20 @@ public class MainActivity extends AppCompatActivity {
             public void onMonthScroll(Date firstDayOfNewMonth) {
                 month.setText(dateFormatMonth.format(firstDayOfNewMonth));
                 Log.d(TAG, "Month was scrolled to: " + firstDayOfNewMonth);
+            }
+        });
+
+        monthForward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compactCalendarView.scrollRight();
+            }
+        });
+
+        monthBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compactCalendarView.scrollLeft();
             }
         });
     }

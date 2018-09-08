@@ -29,7 +29,7 @@
         <activity android:name=".controller.ProjectActivity" />
         <activity
             android:name=".controller.HowToActivity"
-            android:label="@string/title_activity_how_to"></activity>
+            android:label="@string/title_activity_how_to" />
     </application>
 
 </manifest>
