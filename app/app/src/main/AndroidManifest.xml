@@ -24,6 +24,7 @@
         <activity android:name=".controller.MainActivity"/>
         <activity
             android:name=".controller.ProfileActivity"
+            android:theme="@style/AppTheme.ActionBar"
             android:label="@string/title_activity_profile" />
         <activity android:name=".controller.CategoryActivity" />
         <activity android:name=".controller.ProjectActivity" />
