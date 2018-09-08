@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import thesidedepot.app.R;
@@ -16,10 +17,16 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Profile");
-        actionBar.setDisplayShowHomeEnabled(true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.profileToolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("John Doe");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+//        final ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setTitle("Profile");
+//        actionBar.setDisplayShowHomeEnabled(true);
     }
 
     @Override

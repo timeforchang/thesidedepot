@@ -1,6 +1,8 @@
 package thesidedepot.app.controller;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.support.design.widget.Snackbar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -47,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 Snackbar snack = Snackbar.make(findViewById(R.id.loginScreen), "logging you in...", Snackbar.LENGTH_LONG);
                 System.out.println("logged in");
                 snack.show();
-                if (isEmailValid(email.getText().toString()) && loginUser(email.getText().toString(), pass.getText().toString())) {
+                if (isEmailValid(email.getText().toString())) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -64,7 +67,9 @@ public class LoginActivity extends AppCompatActivity {
                 Snackbar snack = Snackbar.make(findViewById(R.id.loginScreen), "signing you up...", Snackbar.LENGTH_LONG);
                 System.out.println("signed up");
                 snack.show();
-                if (isEmailValid(email.getText().toString()) && createUser(email.getText().toString(), pass.getText().toString())) {
+                if (isEmailValid(email.getText().toString())) {
+                    //String[] params = {email.getText().toString(), pass.getText().toString()};
+                    //new createUserTask().execute(params);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -84,20 +89,40 @@ public class LoginActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    public static boolean createUser(String username, String password) {
+    private class createUserTask extends AsyncTask<String, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            return createUser(strings);
+        }
+
+//        @Override
+//        protected void onPostExecute(String s) {
+//            final Toast toast = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
+//            toast.show();
+//            Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    toast.cancel();
+//                }
+//            }, 500);
+//        }
+    }
+
+    public static boolean createUser(String[] params) {
         MongoClientURI connectionString = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
         MongoClient mongoClient = new MongoClient(connectionString);
         DB database = mongoClient.getDB("database");
         DBCollection collection = database.getCollection("userNewA");
         BasicDBObject queryObj = new BasicDBObject();
-        queryObj.put("username", username);
+        queryObj.put("username", params[0]);
         DBCursor results = collection.find(queryObj);
 
 
         if (results.size() == 0) {
             BasicDBObject document = new BasicDBObject();
-            document.put("username", username);
-            document.put("password", password);
+            document.put("username", params[0]);
+            document.put("password", params[1]);
             document.put("badges", new ArrayList<String>());
             document.put("projects", new ArrayList<String>());
             document.put("firstLogin", true);
