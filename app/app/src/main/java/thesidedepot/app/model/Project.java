@@ -28,6 +28,22 @@ public class Project {
         this.parsedHeaders = parsedHeaders;
     }
 
+    @Override
+    public String toString() {
+        return "Project{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", difficulty='" + difficulty + '\'' +
+                ", category='" + category + '\'' +
+                ", toolsAndMaterials=" + toolsAndMaterials +
+                ", time='" + time + '\'' +
+                ", image='" + image + '\'' +
+                ", priceEstimate=" + priceEstimate +
+                ", parsedSteps=" + parsedSteps +
+                ", parsedHeaders=" + parsedHeaders +
+                '}';
+    }
+
     public String getTitle() {
         return title;
     }
