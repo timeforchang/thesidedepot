@@ -67,9 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 Snackbar snack = Snackbar.make(findViewById(R.id.loginScreen), "signing you up...", Snackbar.LENGTH_LONG);
                 System.out.println("signed up");
                 snack.show();
-                if (isEmailValid(email.getText().toString())) {
-                    //String[] params = {email.getText().toString(), pass.getText().toString()};
-                    //new createUserTask().execute(params);
+                if (isEmailValid(email.getText().toString()) && createUser()) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -87,26 +85,6 @@ public class LoginActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
-    }
-
-    private class createUserTask extends AsyncTask<String, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(String... strings) {
-            return createUser(strings);
-        }
-
-//        @Override
-//        protected void onPostExecute(String s) {
-//            final Toast toast = Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT);
-//            toast.show();
-//            Handler handler = new Handler();
-//            handler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    toast.cancel();
-//                }
-//            }, 500);
-//        }
     }
 
     public static boolean createUser(String[] params) {

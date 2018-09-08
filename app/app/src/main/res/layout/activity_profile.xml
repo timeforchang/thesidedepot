@@ -35,7 +35,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/profilepic"
+                    android:src="@drawable/hammers"
                     android:id="@+id/profile_image"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true">

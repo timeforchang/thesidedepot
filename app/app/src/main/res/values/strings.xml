@@ -112,5 +112,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_how_to">HowToActivity</string>
+    <string name="totProj">Projects Total</string>
+    <string name="yearProj">Projects This Year</string>
 </resources>
 
