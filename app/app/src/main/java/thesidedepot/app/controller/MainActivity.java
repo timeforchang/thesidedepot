@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view); // get the reference of CalendarView
         compactCalendarView.setFirstDayOfWeek(Calendar.SUNDAY);
+        compactCalendarView.setLocale(Calendar.getInstance().getTimeZone(), Locale.getDefault());
         compactCalendarView.setUseThreeLetterAbbreviation(true);
 
         Event ev1 = new Event(Color.RED, 1540123200000L, "Teachers' Professional Day");
