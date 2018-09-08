@@ -1,7 +1,9 @@
-package thesidedepot.app;
+package thesidedepot.app.controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import thesidedepot.app.R;
 
 public class CategoryActivity extends AppCompatActivity {
 
