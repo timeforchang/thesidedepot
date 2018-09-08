@@ -16,6 +16,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".NavigationBarActivity"
+            android:label="@string/title_activity_navigation_bar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile" />
+        <activity android:name=".CategoryActivity" />
+        <activity android:name=".ProjectActivity" />
+        <activity
+            android:name=".HowToActivity"
+            android:label="@string/title_activity_how_to"></activity>
     </application>
 
 </manifest>
