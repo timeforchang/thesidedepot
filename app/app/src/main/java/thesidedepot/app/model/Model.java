@@ -17,13 +17,13 @@ public class Model {
         return _instance;
     }
 
-    public User getUser() {
-        return um.getData();
-    }
-
-    public void setUser(User user) {
-        um.setUser(user);
-    }
+//    public User getUser() {
+//        return um.getData();
+//    }
+//
+//    public void setUser(User user) {
+//        um.setUser(user);
+//    }
 
     public boolean logIn(String email, String pass) {
         return um.logInUser(email, pass);

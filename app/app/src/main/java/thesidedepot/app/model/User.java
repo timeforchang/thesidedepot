@@ -3,13 +3,21 @@ package thesidedepot.app.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 public class User implements Parcelable {
     private String _username;
     private String _pWord;
     private boolean _loggedIn;
+    private ArrayList<Build> _buildList;
+
+    public ArrayList<Build> get_buildList() {
+        return _buildList;
+    }
+
+    public void set_buildList(ArrayList<Build> _buildList) {
+        this._buildList = _buildList;
+    }
 
     public String get_username() {
         return _username;
@@ -35,10 +43,11 @@ public class User implements Parcelable {
         this._loggedIn = _loggedIn;
     }
 
-    public User(String _username, String _pWord, boolean _loggedIn) {
+    public User(String _username, String _pWord, boolean _loggedIn, ArrayList<Build> _buildList) {
         this._username = _username;
         this._pWord = _pWord;
         this._loggedIn = _loggedIn;
+        this._buildList = _buildList;
     }
 
     @SuppressWarnings("unused")
@@ -51,6 +60,7 @@ public class User implements Parcelable {
                 ", _username='" + _username + '\'' +
                 ", _pWord='" + _pWord + '\'' +
                 ", _loggedIn=" + _loggedIn +
+                ", _buildList=" + _buildList +
                 '}';
     }
 
@@ -74,15 +84,17 @@ public class User implements Parcelable {
         dest.writeString(this._username);
         dest.writeString(this._pWord);
         dest.writeByte(this._loggedIn ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this._buildList);
     }
 
     protected User(Parcel in) {
         this._username = in.readString();
         this._pWord = in.readString();
         this._loggedIn = in.readByte() != 0;
+        this._buildList = in.createTypedArrayList(Build.CREATOR);
     }
 
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+    public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(Parcel source) {
             return new User(source);

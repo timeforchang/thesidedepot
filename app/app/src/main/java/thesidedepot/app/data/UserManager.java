@@ -1,5 +1,8 @@
 package thesidedepot.app.data;
 
+import java.util.ArrayList;
+
+import thesidedepot.app.model.Build;
 import thesidedepot.app.model.User;
 
 public class UserManager {
@@ -15,13 +18,13 @@ public class UserManager {
     }
 
     public boolean logInUser(String email, String pass) {
-        User newUser = new User(email, pass, true);
+        User newUser = new User(email, pass, true, new ArrayList<Build>());
         setUser(newUser);
         return true;
     }
 
     public boolean registerUser(String email, String pass) {
-        User newUser = new User(email, pass, true);
+        User newUser = new User(email, pass, true, new ArrayList<Build>());
         setUser(newUser);
         return true;
     }
