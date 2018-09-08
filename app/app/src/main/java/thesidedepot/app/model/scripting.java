@@ -24,18 +24,14 @@ public  class scripting {
 
 
 
-
-
-
-    public static void main(String[] args) {
-
+    public void databasePull() {
         ArrayList<Project> holder = new ArrayList<>();
         //MongoClientURI uri = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
 
         MongoClientURI connectionString = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
         MongoClient mongoClient = new MongoClient(connectionString);
         MongoDatabase database = mongoClient.getDatabase("database");
-        MongoCollection<Document> collection = database.getCollection("projectsNew");
+        MongoCollection<Document> collection = database.getCollection("projectsFinalA");
 
 
 
@@ -43,7 +39,7 @@ public  class scripting {
         for (Document cursor : collection.find()) {
             Project proj = new Project((String) cursor.get("title"),(String) cursor.get("description"), (String)cursor.get("difficulty"),
                     (String)cursor.get("category"),(ArrayList<String>) cursor.get("toolsAndMaterials"), (String)cursor.get("time"),(String) cursor.get("image"),
-                    (Double) cursor.get("priceEstimate"),(ArrayList<String>) cursor.get("parsedSteps"),(ArrayList<String>) cursor.get("parsedHeaders"));
+                    (Double) cursor.get("priceEstimate"),(ArrayList<String>) cursor.get("parsedSteps"),(ArrayList<String>) cursor.get("parsedHeaders"), (ArrayList<String>) cursor.get("weblinks"));
             holder.add(proj);
         }
 
@@ -52,10 +48,13 @@ public  class scripting {
         }
 
         System.out.println(holder.size());
+    }
 
+    public void createUser(String username, String password) {
+        
+    }
 
-
-
+    public static void main(String[] args) {
 
 
 

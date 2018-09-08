@@ -9,7 +9,7 @@ client = MongoClient('mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/te
 
 # Get the sampleDB database
 db = client.database
-collection = db.users
+collection = db.usersNewA
 username = "admin"
 password = "pass"
 
@@ -17,16 +17,18 @@ query = {'username' : 'admin'}
 
 user = {
 	'username' : username,
-	'password' : password
+	'password' : password,
+	'projects' : None,
+	'badges' : None,
+	'firstLogin' : 1
+
+
 }
 
 #collection.insert_one(user)
-
-for item in collection.find(query):
-	print(item)
-	if (item['password'] == 'pass'):
-		print(0)
-	else:
-		print(1)
+count = 0
+for item in collection.find():
+	count = count + 1
+	print(count)
 	
 
