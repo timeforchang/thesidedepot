@@ -5,6 +5,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 import org.bson.Document;
@@ -14,7 +15,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class scripting {
+public  class scripting {
+
 
 
 
@@ -27,7 +29,7 @@ public class scripting {
 
     public static void main(String[] args) {
 
-
+        ArrayList<Project> holder = new ArrayList<>();
         //MongoClientURI uri = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
 
         MongoClientURI connectionString = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
@@ -36,12 +38,20 @@ public class scripting {
         MongoCollection<Document> collection = database.getCollection("projectsNew");
 
 
-        Document myDoc = collection.find().first();
-        ArrayList<String> solution = (ArrayList<String>) myDoc.get("parsedSteps");
 
-        for (String item: solution) {
-            System.out.println(item);
+
+        for (Document cursor : collection.find()) {
+            Project proj = new Project((String) cursor.get("title"),(String) cursor.get("description"), (String)cursor.get("difficulty"),
+                    (String)cursor.get("category"),(ArrayList<String>) cursor.get("toolsAndMaterials"), (String)cursor.get("time"),(String) cursor.get("image"),
+                    (Double) cursor.get("priceEstimate"),(ArrayList<String>) cursor.get("parsedSteps"),(ArrayList<String>) cursor.get("parsedHeaders"));
+            holder.add(proj);
         }
+
+        for (Project item : holder) {
+            System.out.println(item.toString());
+        }
+
+        System.out.println(holder.size());
 
 
 
