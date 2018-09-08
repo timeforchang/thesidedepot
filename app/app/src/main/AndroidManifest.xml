@@ -21,7 +21,7 @@
             android:name=".controller.NavigationBarActivity"
             android:label="@string/title_activity_navigation_bar"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".controller.MainActivity" />
+        <activity android:name=".controller.MainActivity"/>
         <activity
             android:name=".controller.ProfileActivity"
             android:label="@string/title_activity_profile" />
