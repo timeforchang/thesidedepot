@@ -13,9 +13,10 @@ public class Project {
     private double priceEstimate;
     private ArrayList<String> parsedSteps;
     private ArrayList<String> parsedHeaders;
+    private ArrayList<String> webCollection;
 
 
-    public Project(String title, String description, String difficulty, String category, ArrayList<String> toolsAndMaterials, String time, String image, double priceEstimate, ArrayList<String> parsedSteps, ArrayList<String> parsedHeaders) {
+    public Project(String title, String description, String difficulty, String category, ArrayList<String> toolsAndMaterials, String time, String image, double priceEstimate, ArrayList<String> parsedSteps, ArrayList<String> parsedHeaders, ArrayList<String> webCollection) {
         this.title = title;
         this.description = description;
         this.difficulty = difficulty;
@@ -26,6 +27,7 @@ public class Project {
         this.priceEstimate = priceEstimate;
         this.parsedSteps = parsedSteps;
         this.parsedHeaders = parsedHeaders;
+        this.webCollection = webCollection;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class Project {
                 ", priceEstimate=" + priceEstimate +
                 ", parsedSteps=" + parsedSteps +
                 ", parsedHeaders=" + parsedHeaders +
+                ", webCollection=" + webCollection +
                 '}';
     }
 
@@ -122,5 +125,13 @@ public class Project {
 
     public void setParsedHeaders(ArrayList<String> parsedHeaders) {
         this.parsedHeaders = parsedHeaders;
+    }
+
+    public ArrayList<String> getWebCollection() {
+        return webCollection;
+    }
+
+    public void setWebCollection(ArrayList<String> webCollection) {
+        this.webCollection = webCollection;
     }
 }

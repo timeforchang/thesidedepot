@@ -1,5 +1,5 @@
 package thesidedepot.app.controller;
-//Calendar
+//calendar
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
