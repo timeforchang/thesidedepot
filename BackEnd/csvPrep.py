@@ -8,7 +8,7 @@ from pymongo import MongoClient
 
 client = MongoClient('mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true', ssl=True, ssl_cert_reqs=ssl.CERT_NONE)
 db = client.database
-collection = db.projectsNew
+collection = db.projectsFinal
 
 
 path_to_chromedriver = './scraping/chromedriver'
@@ -94,7 +94,8 @@ for x in range(0,numRows):
 		'image' : image,
 		'priceEstimate' : priceEstimate,
 		'parsedSteps' : parsedSteps,
-		'parsedHeaders' : parsedHeaders
+		'parsedHeaders' : parsedHeaders,
+		'weblinks' : listItems
 	}
 
 	print(dbObject)
