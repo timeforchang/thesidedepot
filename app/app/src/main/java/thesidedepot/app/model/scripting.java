@@ -1,9 +1,13 @@
 package thesidedepot.app.model;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -12,7 +16,9 @@ import org.bson.Document;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public  class scripting {
@@ -50,11 +56,84 @@ public  class scripting {
         System.out.println(holder.size());
     }
 
-    public void createUser(String username, String password) {
-        
+    public static void createUser(String username, String password) {
+        MongoClientURI connectionString = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
+        MongoClient mongoClient = new MongoClient(connectionString);
+        DB database = mongoClient.getDB("database");
+        DBCollection collection = database.getCollection("userNewA");
+        BasicDBObject queryObj = new BasicDBObject();
+        queryObj.put("username", username);
+        DBCursor results = collection.find(queryObj);
+
+
+        if (results.size() == 0) {
+            BasicDBObject document = new BasicDBObject();
+            document.put("username", username);
+            document.put("password", password);
+            document.put("badges", new ArrayList<String>());
+            document.put("projects", new ArrayList<String>());
+            document.put("firstLogin", true);
+            collection.insert(document);
+            System.out.println("user made");
+        } else {
+            System.out.println("user exists");
+            while(results.hasNext()) {
+                System.out.println(results.next());
+            }
+        }
+    }
+
+    public static void loginUser(String username, String password) {
+        MongoClientURI connectionString = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
+        MongoClient mongoClient = new MongoClient(connectionString);
+        DB database = mongoClient.getDB("database");
+        DBCollection collection = database.getCollection("userNewA");
+        BasicDBObject queryObj = new BasicDBObject();
+        queryObj.put("username", username);
+        DBCursor results = collection.find(queryObj);
+
+        if (results.size() == 0) {
+            System.out.println("User does not exist");
+        } else {
+            while(results.hasNext()) {
+
+                BasicDBObject currDoc = (BasicDBObject) results.next();
+
+                if (password.equals(currDoc.get("password"))) {
+                    System.out.println("valid login");
+
+                    //Set first login to FALSE
+                    if ((boolean) (currDoc.get("firstLogin"))) {
+                        System.out.println("firstLogin is true");
+
+                        BasicDBObject newDocument = new BasicDBObject();
+                        newDocument.put("firstLogin", false);
+
+                        BasicDBObject updateObject = new BasicDBObject();
+                        updateObject.put("$set", newDocument);
+
+                        collection.update(queryObj, updateObject);
+
+
+                    } else {
+                        System.out.println("firstLogin is false");
+                    }
+                } else {
+                    System.out.println("bad password");
+                }
+            }
+
+        }
+    }
+
+    public static void generateProjectCatagories() {
+
     }
 
     public static void main(String[] args) {
+
+        createUser("admin", "password");
+        loginUser("admin", "password");
 
 
 
