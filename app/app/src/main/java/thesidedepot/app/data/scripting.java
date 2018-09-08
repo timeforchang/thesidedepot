@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import thesidedepot.app.model.Project;
@@ -135,14 +136,76 @@ public  class scripting {
         }
     }
 
-    public static void generateProjectCatagories() {
+    public static void generateProjects(String[] categories) {
+
+        MongoClientURI connectionString = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
+        MongoClient mongoClient = new MongoClient(connectionString);
+        DB database = mongoClient.getDB("database");
+        DBCollection collection = database.getCollection("projectsFinalA");
+        BasicDBObject queryObj = new BasicDBObject();
+
+        ArrayList<Project> possibleProjects = new ArrayList<>();
+//        ArrayList<Project> possibleProjectsIntermediate = new ArrayList<>();
+//        ArrayList<Project> possibleProjectsAdvanced = new ArrayList<>();
+
+        for (String category: categories) {
+            queryObj.put("category", category);
+            DBCursor results = collection.find(queryObj);
+            //System.out.println(results.size());
+            while (results.hasNext()) {
+                BasicDBObject currDoc = (BasicDBObject) results.next();
+                Project proj = new Project((String) currDoc.get("title"),(String) currDoc.get("description"), (String)currDoc.get("difficulty"),
+                        (String)currDoc.get("category"),(ArrayList<String>) currDoc.get("toolsAndMaterials"), (String)currDoc.get("time"),(String) currDoc.get("image"),
+                        (Double) currDoc.get("priceEstimate"),(ArrayList<String>) currDoc.get("parsedSteps"),(ArrayList<String>) currDoc.get("parsedHeaders"), (ArrayList<String>) currDoc.get("weblinks"));
+                possibleProjects.add(proj);
+            }
+            //System.out.println(possibleProjects.size());
+        }
+
+        ArrayList<Project> easy = new ArrayList<>();
+        ArrayList<Project> intermediate = new ArrayList<>();
+        ArrayList<Project> advanced = new ArrayList<>();
+
+        for (Project proj : possibleProjects) {
+            if (proj.getDifficulty().equals("Easy")) {
+                easy.add(proj);
+            } else if (proj.getDifficulty().equals("Intermediate")) {
+                intermediate.add(proj);
+            } else {
+                advanced.add(proj);
+            }
+        }
+
+        Collections.shuffle(easy);
+        Collections.shuffle(intermediate);
+        Collections.shuffle(advanced);
+
+        ArrayList<Project> suggestList = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            suggestList.add(easy.get(i));
+        }
+        for (int i = 0; i < 3; i++) {
+            suggestList.add(intermediate.get(i));
+        }
+        for (int i = 0; i < 3; i++) {
+            suggestList.add(advanced.get(i));
+        }
+
+        for (Project proj : suggestList) {
+            System.out.println(proj.getDifficulty() + " " + proj.getTitle() + " " + proj.getCategory());
+        }
+
+
+
 
     }
 
     public static void main(String[] args) {
 
-        createUser("admin", "password");
-        loginUser("admin", "password");
+        //createUser("admin", "password");
+        //loginUser("admin", "password");
+        //generateProjects(new String[]{"Home Renovation", "DIY, Decor & Fun", "Lawn, Garden, & Outdoor"});
 
 
 
