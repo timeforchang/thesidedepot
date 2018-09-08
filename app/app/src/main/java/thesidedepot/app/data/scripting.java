@@ -1,4 +1,4 @@
-package thesidedepot.app.model;
+package thesidedepot.app.data;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -19,6 +19,8 @@ import org.json.JSONObject;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+import thesidedepot.app.model.Project;
 
 
 public  class scripting {
@@ -56,7 +58,7 @@ public  class scripting {
         System.out.println(holder.size());
     }
 
-    public static void createUser(String username, String password) {
+    public static boolean createUser(String username, String password) {
         MongoClientURI connectionString = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
         MongoClient mongoClient = new MongoClient(connectionString);
         DB database = mongoClient.getDB("database");
@@ -75,15 +77,17 @@ public  class scripting {
             document.put("firstLogin", true);
             collection.insert(document);
             System.out.println("user made");
+            return true;
         } else {
             System.out.println("user exists");
             while(results.hasNext()) {
                 System.out.println(results.next());
             }
+            return false;
         }
     }
 
-    public static void loginUser(String username, String password) {
+    public static boolean loginUser(String username, String password) {
         MongoClientURI connectionString = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
         MongoClient mongoClient = new MongoClient(connectionString);
         DB database = mongoClient.getDB("database");
@@ -94,6 +98,7 @@ public  class scripting {
 
         if (results.size() == 0) {
             System.out.println("User does not exist");
+            return false;
         } else {
             while(results.hasNext()) {
 
@@ -114,15 +119,19 @@ public  class scripting {
 
                         collection.update(queryObj, updateObject);
 
+                        return true;
 
                     } else {
                         System.out.println("firstLogin is false");
+                        return true;
                     }
                 } else {
                     System.out.println("bad password");
+                    return false;
                 }
             }
 
+            return false;
         }
     }
 
