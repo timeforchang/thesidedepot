@@ -39,32 +39,37 @@ public class HowToActivity extends AppCompatActivity {
     TextView desc, time, diff, link;
     ListView lv;
     ImageView image;
+    String weblink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_how_to);
 
-        Project cur = MainActivity.myProjectList.get(0);
-        cur = MainActivity.projectList.get(cur.getTitle());
+        //Project cur = MainActivity.myProjectList.get(0);
+        //cur = MainActivity.projectList.get(cur.getTitle());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.howtoToolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(cur.getTitle());
+        getSupportActionBar().setTitle(MainActivity.myProjectList.get(0).getTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         image = (ImageView) findViewById(R.id.howto_image);
-        Picasso.get().load(cur.getImage()).into(image);
+        Picasso.get().load(MainActivity.myProjectList.get(0).getImage()).into(image);
 
         desc = (TextView) findViewById(R.id.desc);
-        desc.setText(cur.getDescription());
+        desc.setText(MainActivity.myProjectList.get(0).getDescription());
 
         time = (TextView) findViewById(R.id.totProjTime);
-        time.setText(cur.getTime());
+        time.setText(MainActivity.myProjectList.get(0).getTime());
 
         diff = (TextView) findViewById(R.id.diff);
-        diff.setText(cur.getDifficulty());
+        diff.setText(MainActivity.myProjectList.get(0).getDifficulty());
+
+        link = (TextView) findViewById(R.id.link);
+        link.setText(MainActivity.myProjectList.get(0).getWebCollection().get(MainActivity.myProjectList.get(0).getWebCollection().size() - 2));
+
 
         Button completionButton = (Button) findViewById(R.id.completionButton);
 
@@ -111,8 +116,11 @@ public class HowToActivity extends AppCompatActivity {
 
 
 
-        link = (TextView) findViewById(R.id.link);
-        link.setText(cur.getWebCollection().get(cur.getWebCollection().size() - 1));
+
 
     }
+
+
+
+
 }

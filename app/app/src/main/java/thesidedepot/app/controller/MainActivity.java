@@ -452,6 +452,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     toolsAndMaterials = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("toolsAndMaterials");
                     webCollection = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("weblinks");
 
+                    System.out.println(webCollection.length());
+
+
                     for (int i=0; i<parsedSteps.length(); i++) {
                         finalSteps.add( parsedSteps.getString(i) );
                     }
@@ -465,6 +468,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     for (int i=0; i<webCollection.length(); i++) {
                         finalWeb.add( webCollection.getString(i) );
+
                     }
 
 
@@ -480,6 +484,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     myResponse.getJSONArray("message").getJSONObject(count).getString("image"),
                                     myResponse.getJSONArray("message").getJSONObject(count).getDouble("priceEstimate"),
                                     finalSteps, finalHeaders, finalWeb));
+                    finalWeb = new ArrayList<>();
+                    finalSteps = new ArrayList<>();
+                    finalHeaders = new ArrayList<>();
+                    finalTools = new ArrayList<>();
                 }
 
 
