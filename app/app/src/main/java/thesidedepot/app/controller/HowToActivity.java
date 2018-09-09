@@ -5,15 +5,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-<<<<<<< HEAD
+
 import android.view.View;
 import android.widget.Button;
-=======
+
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
->>>>>>> 5a9b29de60ad8178b2935ab51a06f278f1c43e0c
+
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -62,15 +62,8 @@ public class HowToActivity extends AppCompatActivity {
         diff = (TextView) findViewById(R.id.diff);
         diff.setText(cur.getDifficulty());
 
-<<<<<<< HEAD
-        String[] materialList = new String[cur.getToolsAndMaterials().size()];
 
-        materialList = (String[]) cur.getToolsAndMaterials().toArray(materialList);
-
-        materials = (GridView) findViewById(R.id.materials);
-
-        GridAdapter gridAdapter = new GridAdapter(this, materialList);
-        materials.setAdapter(gridAdapter);
+        
 
         Button completionButton = (Button) findViewById(R.id.completionButton);
 
@@ -98,9 +91,9 @@ public class HowToActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
 
-=======
+
         link = (TextView) findViewById(R.id.link);
         link.setText(cur.getWebCollection().get(cur.getWebCollection().size() - 1));
->>>>>>> 5a9b29de60ad8178b2935ab51a06f278f1c43e0c
+
     }
 }
