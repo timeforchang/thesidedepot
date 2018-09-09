@@ -35,6 +35,8 @@ import thesidedepot.app.R;
 import thesidedepot.app.model.Model;
 import thesidedepot.app.model.User;
 
+import static thesidedepot.app.controller.MainActivity.currentUser;
+
 public class LoginActivity extends AppCompatActivity {
     Model model = Model.getInstance();
     EditText email, pass;
@@ -126,6 +128,8 @@ public class LoginActivity extends AppCompatActivity {
                 int responseCode = con.getResponseCode();
 
                 if (responseCode == 200) {
+                    //new MainActivity.updateUser().execute("https://sidedepot.herokuapp.com/users/" + email.getText().toString());
+
                     BufferedReader in = new BufferedReader(
                             new InputStreamReader(con.getInputStream()));
                     String inputLine;
@@ -182,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
                 URL obj = new URL(params[0]);
-                String data = "{username : " + email.getText().toString() + ", password: " + pass.getText().toString() + ", badges: " + new ArrayList<String>() + ", projects: " + new ArrayList<String>() + "}";
+                String data = "{username : " + email.getText().toString() + ", password: " + pass.getText().toString() + "}";
 
                 JSONObject jsonData = new JSONObject(data);
                 //Log.d("JSONTest", jsonData.toString());
@@ -201,6 +205,8 @@ public class LoginActivity extends AppCompatActivity {
                 int responseCode = con.getResponseCode();
 
                 if (responseCode == 200) {
+                    //new MainActivity.updateUser().execute("https://sidedepot.herokuapp.com/users/" + email.getText().toString());
+
                     BufferedReader in = new BufferedReader(
                             new InputStreamReader(con.getInputStream()));
                     String inputLine;
