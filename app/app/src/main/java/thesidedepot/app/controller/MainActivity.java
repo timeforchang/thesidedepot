@@ -152,15 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         currentProj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Build> builds = model.getBuildList();
-                int index = 0;
-                while (builds.get(index).is_done()) {
-                    index++;
-                }
-                new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
-                Build currentBuild = builds.get(index);
                 Intent i = new Intent(MainActivity.this, HowToActivity.class);
-                i.putExtra("curBuild", currentBuild);
                 startActivity(i);
             }
         });

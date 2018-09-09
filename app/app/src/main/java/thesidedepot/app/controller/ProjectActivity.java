@@ -109,6 +109,7 @@ public class ProjectActivity extends AppCompatActivity {
             Project project = (Project) pair.getValue();
 
             if (name != null && !name.isEmpty() && CategoryActivity.categories.contains(project.getCategory())) {
+                System.out.print(CategoryActivity.categories.size());
                 if (project.getDifficulty().equals("Easy")) {
                     easy.add(project);
                 } else if (project.getDifficulty().equals("Intermediate")) {
@@ -123,16 +124,16 @@ public class ProjectActivity extends AppCompatActivity {
         Collections.shuffle(med);
         Collections.shuffle(hard);
 
-//        total.add(easy.get(0));
-//        total.add(easy.get(1));
-//        total.add(easy.get(2));
-//        total.add(med.get(0));
-//        total.add(easy.get(3));
-//        total.add(med.get(1));
-//        total.add(hard.get(0));
-//        total.add(med.get(2));
-//        total.add(hard.get(1));
-//        total.add(hard.get(2));
+        total.add(easy.get(0));
+        total.add(easy.get(1));
+        total.add(easy.get(2));
+        total.add(med.get(0));
+        total.add(easy.get(3));
+        total.add(med.get(1));
+        total.add(hard.get(0));
+        total.add(med.get(2));
+        total.add(hard.get(1));
+        total.add(hard.get(2));
 
         return total;
     }
