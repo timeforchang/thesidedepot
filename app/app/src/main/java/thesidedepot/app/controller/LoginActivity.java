@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,13 @@ import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,15 +37,17 @@ import thesidedepot.app.model.User;
 
 public class LoginActivity extends AppCompatActivity {
     Model model = Model.getInstance();
+    EditText email, pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final EditText email, pass;
         CardView login;
         TextView signup;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        final LoginActivity here = this;
 
         email = findViewById(R.id.email);
         pass = findViewById(R.id.password);
@@ -51,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 System.out.println("logged in");
                 snack.show();
                 if (isEmailValid(email.getText().toString())) {
+                    //new loginUser(here).execute("https://godhelpusall.com");
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -67,7 +78,8 @@ public class LoginActivity extends AppCompatActivity {
                 Snackbar snack = Snackbar.make(findViewById(R.id.loginScreen), "signing you up...", Snackbar.LENGTH_LONG);
                 System.out.println("signed up");
                 snack.show();
-                if (isEmailValid(email.getText().toString()) && createUser()) {
+                if (isEmailValid(email.getText().toString())) {
+                    //new registerUser(here).execute("https://time4cook.herokuapp.com/users/signup");
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -87,80 +99,152 @@ public class LoginActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    public static boolean createUser(String[] params) {
-        MongoClientURI connectionString = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
-        MongoClient mongoClient = new MongoClient(connectionString);
-        DB database = mongoClient.getDB("database");
-        DBCollection collection = database.getCollection("userNewA");
-        BasicDBObject queryObj = new BasicDBObject();
-        queryObj.put("username", params[0]);
-        DBCursor results = collection.find(queryObj);
+    public class loginUser extends AsyncTask<String, String, String> {
 
+        private LoginActivity parent;
 
-        if (results.size() == 0) {
-            BasicDBObject document = new BasicDBObject();
-            document.put("username", params[0]);
-            document.put("password", params[1]);
-            document.put("badges", new ArrayList<String>());
-            document.put("projects", new ArrayList<String>());
-            document.put("firstLogin", true);
-            collection.insert(document);
-            System.out.println("user made");
-            return true;
-        } else {
-            System.out.println("user exists");
-            while(results.hasNext()) {
-                System.out.println(results.next());
+        public loginUser(LoginActivity parent) {
+            this.parent = parent;
+        }
+        //New json object (email field, password)
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                URL obj = new URL(params[0]);
+                String data = "{email : " + email.getText().toString() +", password: " + pass.getText().toString() +  "}";
+
+                JSONObject jsonData = new JSONObject(data);
+                //Log.d("JSONTest", jsonData.toString());
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+                // optional default is GET
+                con.setDoOutput(true);
+                con.setInstanceFollowRedirects(false);
+                con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                con.setRequestProperty("Accept", "application/json");
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(con.getOutputStream());
+                Log.d("JSONTest", jsonData.toString());
+                outputStreamWriter.write(jsonData.toString());
+                outputStreamWriter.flush();
+                con.setRequestMethod("POST");
+                int responseCode = con.getResponseCode();
+
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(con.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    JSONObject myResponse = new JSONObject(response.toString());
+                    System.out.println(myResponse.getString("token"));
+
+//                    SharedPreferences preferences = LoginActivity.this.getSharedPreferences("CookingToken",MODE_PRIVATE);
+//                    SharedPreferences.Editor editor;
+//                    editor = preferences.edit();
+//                    editor.putString("JWT Token", myResponse.getString("token"));
+//                    editor.commit();
+
+                    //TO RETRIEVE STORED TOKEN: preferences.getString("CookingToken", "No Token");
+
+                    Intent i  = new Intent(LoginActivity.this, MainActivity.class);
+                    //i.putExtra("recipeList", recipeList);
+                    startActivity(i);
+                    finish();
+                } else {
+
+                    parent.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(parent.getBaseContext(), "Either your email or password is incorrect", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                //System.out.println("\nSending 'GET' request to URL : " + url);
+
+                //Log.d("JSONTest", jsonData.toString());
+
+            } catch (Exception exception) {
+                Log.d("hi", exception.toString());
             }
-            return false;
+            return null;
         }
     }
 
-    public static boolean loginUser(String username, String password) {
-        MongoClientURI connectionString = new MongoClientURI("mongodb+srv://admin:siderift@cluster0-1jnpy.mongodb.net/test?retryWrites=true");
-        MongoClient mongoClient = new MongoClient(connectionString);
-        DB database = mongoClient.getDB("database");
-        DBCollection collection = database.getCollection("userNewA");
-        BasicDBObject queryObj = new BasicDBObject();
-        queryObj.put("username", username);
-        DBCursor results = collection.find(queryObj);
+    public class registerUser extends AsyncTask<String, String, String> {
 
-        if (results.size() == 0) {
-            System.out.println("User does not exist");
-            return false;
-        } else {
-            while(results.hasNext()) {
+        private LoginActivity parent;
 
-                BasicDBObject currDoc = (BasicDBObject) results.next();
+        public registerUser(LoginActivity parent) {
+            this.parent = parent;
+        }
+        //New json object (email field, password)
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                URL obj = new URL(params[0]);
+                String data = "{email: '" + email +"', " +
+                        "password: '" + pass +  "'" +
+                        "}";
 
-                if (password.equals(currDoc.get("password"))) {
-                    System.out.println("valid login");
+                JSONObject jsonData = new JSONObject(data);
+                //Log.d("JSONTest", jsonData.toString());
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-                    //Set first login to FALSE
-                    if ((boolean) (currDoc.get("firstLogin"))) {
-                        System.out.println("firstLogin is true");
+                // optional default is GET
+                con.setDoOutput(true);
+                con.setInstanceFollowRedirects(false);
+                con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                con.setRequestProperty("Accept", "application/json");
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(con.getOutputStream());
+                Log.d("JSONTest", jsonData.toString());
+                outputStreamWriter.write(jsonData.toString());
+                outputStreamWriter.flush();
+                con.setRequestMethod("POST");
+                int responseCode = con.getResponseCode();
 
-                        BasicDBObject newDocument = new BasicDBObject();
-                        newDocument.put("firstLogin", false);
-
-                        BasicDBObject updateObject = new BasicDBObject();
-                        updateObject.put("$set", newDocument);
-
-                        collection.update(queryObj, updateObject);
-
-                        return true;
-
-                    } else {
-                        System.out.println("firstLogin is false");
-                        return true;
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(con.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
                     }
-                } else {
-                    System.out.println("bad password");
-                    return false;
-                }
-            }
+                    in.close();
 
-            return false;
+                    //JSONObject myResponse = new JSONObject(response.toString());
+                    //System.out.println(myResponse.getString("token"));
+                    System.out.println("here");
+                    parent.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(parent.getBaseContext(), "Account created! Please login", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                    // NEED TO IMPLEMENT EMAIL VERIFICATION SYSTEM
+
+                    Intent i  = new Intent(LoginActivity.this, MainActivity.class);
+                    //i.putExtra("recipeList", recipeList);
+                    startActivity(i);
+                } else {
+
+                    parent.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(parent.getBaseContext(), "Email account already exists", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                //System.out.println("\nSending 'GET' request to URL : " + url);
+
+                //Log.d("JSONTest", jsonData.toString());
+
+            } catch (Exception exception) {
+                Log.d("hi", exception.toString());
+            }
+            return null;
         }
     }
 }
