@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mobile"
-    tools:context=".controller.CategoryActivity">
+    tools:context=".controller.CategoryActivity"
+    android:id="@+id/CategoryScreen">
 
     <ListView
         android:id="@+id/list"
@@ -19,8 +20,9 @@
         android:scrollingCache="false"
         android:smoothScrollbar="false"
         android:textColor="#80000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="68dp"
+        app:layout_constraintBottom_toTopOf="@id/getchoice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

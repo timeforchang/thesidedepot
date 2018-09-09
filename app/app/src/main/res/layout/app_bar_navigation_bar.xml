@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="10dp">
+                android:layout_margin="5dp">
 
                 <ProgressBar
                     android:id="@+id/progressBar2"
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="10dp">
+                android:layout_margin="5dp">
 
                 <ProgressBar
                     android:id="@+id/progressBar6"
@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="10dp">
+                android:layout_margin="5dp">
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -194,7 +194,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="10dp">
+                android:layout_margin="5dp">
 
                 <ProgressBar
                     android:id="@+id/progressBar5"
