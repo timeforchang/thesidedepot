@@ -18,14 +18,23 @@ public class UserManager {
     }
 
     public boolean logInUser(String email, String pass) {
+        scripting.loginUser(email, pass);
         User newUser = new User(email, pass, true, new ArrayList<Build>());
-        setUser(newUser);
-        return true;
+        if (scripting.loginUser(email, pass)) {
+            setUser(newUser);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean registerUser(String email, String pass) {
         User newUser = new User(email, pass, true, new ArrayList<Build>());
-        setUser(newUser);
-        return true;
+        if (scripting.createUser(email, pass)) {
+            setUser(newUser);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

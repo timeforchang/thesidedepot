@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_gallery) { //Calendar
             Intent intent = new Intent(MainActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         } else if (id == R.id.nav_slideshow) { //Project Areas
             Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
             startActivity(intent);
