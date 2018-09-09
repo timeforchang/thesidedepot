@@ -67,6 +67,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static HashMap<String, Project> projectList = new HashMap<>();
     public static ArrayList<Project> myProjectList = new ArrayList<>();
     public static ArrayList<String> badges = new ArrayList<>();
+    public static int totalDone = 0;
+    public static int DIYDone = 0;
+    public static int RenDone = 0;
+    public static int MainDone = 0;
+    public static int OutDone = 0;
+    public static int projIndex = 0;
     public static boolean firstLoad = true;
 
     private Button currentProj;
@@ -97,6 +103,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         System.out.println(projectList.size());
 
+        ProgressBar diy = (ProgressBar) findViewById(R.id.progressBar2);
+        ProgressBar ren = (ProgressBar) findViewById(R.id.progressBar6);
+        ProgressBar main = (ProgressBar) findViewById(R.id.progressBar);
+        ProgressBar out = (ProgressBar) findViewById(R.id.progressBar5);
+        ProgressBar totalProgress = (ProgressBar) findViewById(R.id.progressBar7);
+
+        diy.setProgress(DIYDone);
+        ren.setProgress(RenDone);
+        main.setProgress(MainDone);
+        out.setProgress(OutDone);
+        totalProgress.setProgress(totalDone);
 
         month = (TextView) findViewById(R.id.month);
         month.setText(dateFormatMonth.format(Calendar.getInstance().getTime()));
@@ -223,6 +240,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ProgressBar diy = (ProgressBar) findViewById(R.id.progressBar2);
+        ProgressBar ren = (ProgressBar) findViewById(R.id.progressBar6);
+        ProgressBar main = (ProgressBar) findViewById(R.id.progressBar);
+        ProgressBar out = (ProgressBar) findViewById(R.id.progressBar5);
+        ProgressBar totalProgress = (ProgressBar) findViewById(R.id.progressBar7);
+
+        diy.setProgress(DIYDone);
+        ren.setProgress(RenDone);
+        main.setProgress(MainDone);
+        out.setProgress(OutDone);
+        totalProgress.setProgress(totalDone);
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -265,15 +299,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) { //Calendar
-            new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
-            Intent intent = new Intent(MainActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+//            new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
+//            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            }
         } else if (id == R.id.nav_slideshow) { //Project Areas
             new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
             Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
             intent.putExtra("myBuilds", myProjectList);
             startActivity(intent);
+            finish();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -513,7 +552,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static class updateUser extends AsyncTask<String, String, String> {
 
 
-
         //New json object (email field, password)
         @Override
         protected String doInBackground(String... params) {
@@ -547,7 +585,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 outputStreamWriter.flush();
                 con.setRequestMethod("POST");
                 int responseCode = con.getResponseCode();
-
 
 
                 if (responseCode == 200) {
@@ -588,12 +625,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return null;
         }
     }
-
-//    ProgressBar diy = (ProgressBar) findViewById(R.id.progressBar2);
-//
-//    ProgressBar ren = (ProgressBar) findViewById(R.id.progressBar6);
-//    ProgressBar main = (ProgressBar) findViewById(R.id.progressBar);
-//    ProgressBar out = (ProgressBar) findViewById(R.id.progressBar5);
 
 }
 
