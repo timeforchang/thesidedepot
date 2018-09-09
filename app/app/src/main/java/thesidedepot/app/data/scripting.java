@@ -205,7 +205,7 @@ public  class scripting {
 
         //createUser("admin", "password");
         //loginUser("admin", "password");
-        generateProjects(new String[]{"Home Renovation", "DIY, Decor & Fun", "Lawn, Garden, & Outdoor"});
+        //generateProjects(new String[]{"Home Renovation", "DIY, Decor & Fun", "Lawn, Garden, & Outdoor"});
 
 
 
