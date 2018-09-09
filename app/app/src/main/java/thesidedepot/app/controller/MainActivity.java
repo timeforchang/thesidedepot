@@ -1,5 +1,6 @@
 package thesidedepot.app.controller;
 //calendar
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,9 +19,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +52,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+//        ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress", 0, 10); // see this max value coming back here, we animate towards that value
+//        //animation.setDuration(5000); // in milliseconds
+//        //animation.setInterpolator(new DecelerateInterpolator());
+//        //animation.start();
 
         month = (TextView) findViewById(R.id.month);
         month.setText(dateFormatMonth.format(Calendar.getInstance().getTime()));
@@ -175,6 +184,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
+
     }
 }
 
