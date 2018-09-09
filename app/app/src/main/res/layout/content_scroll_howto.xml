@@ -107,5 +107,17 @@
         android:gravity="center"
         android:text="See below for Instructions:"/>
 
+    <Button
+        android:id="@+id/completionButton"
+        android:layout_width="90dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:text="Complete"/>
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
