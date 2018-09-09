@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -26,19 +27,22 @@ import thesidedepot.app.model.Build;
 import thesidedepot.app.model.Model;
 import thesidedepot.app.model.Project;
 
+import static thesidedepot.app.controller.MainActivity.currentUser;
+
 public class HowToActivity extends AppCompatActivity {
     GridView materials;
     Model model;
     TextView desc, time, diff, link;
     ListView lv;
     ImageView image;
+    Project cur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_how_to);
 
-        Project cur = MainActivity.myProjectList.get(0);
+        cur = MainActivity.myProjectList.get(MainActivity.projIndex);
         cur = MainActivity.projectList.get(cur.getTitle());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.howtoToolbar);
@@ -71,7 +75,21 @@ public class HowToActivity extends AppCompatActivity {
                         .setMessage("Are you sure you want to delete this entry?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
+
+                                if (cur.getCategory().equals("DIY, Decor & Fun")) {
+                                    MainActivity.DIYDone++;
+                                } else if (cur.getCategory().equals("Lawn, Garden, & Outdoor")) {
+                                    MainActivity.OutDone++;
+                                } else if (cur.getCategory().equals("Home Maintenance")) {
+                                    MainActivity.MainDone++;
+                                } else if (cur.getCategory().equals("Home Renovation")) {
+                                    MainActivity.RenDone++;
+                                }
+                                MainActivity.totalDone++;
+
+                                MainActivity.projIndex++;
+
+                                new MainActivity.updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {

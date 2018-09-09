@@ -1,8 +1,9 @@
 package thesidedepot.app.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Project {
+public class Project implements Serializable {
     private String title;
     private String description;
     private String difficulty;
