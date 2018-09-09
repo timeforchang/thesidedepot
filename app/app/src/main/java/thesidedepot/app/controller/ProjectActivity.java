@@ -40,6 +40,8 @@ public class ProjectActivity extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.projectList);
 
+        System.out.print("categories: " + CategoryActivity.categories.size());
+
         buildnames = new ArrayList<String>();
         generated = generateBuilds();
 
@@ -106,12 +108,15 @@ public class ProjectActivity extends AppCompatActivity {
             String name = (String) pair.getKey();
             Project project = (Project) pair.getValue();
 
-            if (project.getDifficulty().equals("Easy")) {
-                easy.add(project);
-            } else if (project.getDifficulty().equals("Intermediate")) {
-                med.add(project);
-            } else if (project.getDifficulty().equals("Advanced")) {
-                hard.add(project);
+            if (name != null && !name.isEmpty() && CategoryActivity.categories.contains(project.getCategory())) {
+                System.out.print(CategoryActivity.categories.size());
+                if (project.getDifficulty().equals("Easy")) {
+                    easy.add(project);
+                } else if (project.getDifficulty().equals("Intermediate")) {
+                    med.add(project);
+                } else if (project.getDifficulty().equals("Advanced")) {
+                    hard.add(project);
+                }
             }
         }
 

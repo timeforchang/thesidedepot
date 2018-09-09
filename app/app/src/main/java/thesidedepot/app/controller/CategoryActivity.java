@@ -1,6 +1,7 @@
 package thesidedepot.app.controller;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,9 +27,15 @@ public class CategoryActivity extends AppCompatActivity {
     Button makePlan;
     Button back_button;
 
+    public static ArrayList<String> categories = new ArrayList<>();
+
     String[] listContent = {
             //"Home Renovation", "Home Maintenance", "Garden & Outdoor", "DIY, Decor, & Fun"
             "", "", "", ""
+    };
+
+    String[] catList = {
+            "Home Renovation", "Home Maintenance", "Lawn, Garden, & Outdoor", "DIY, Decor & Fun"
     };
 
     @Override
@@ -63,7 +70,7 @@ public class CategoryActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams params = view.getLayoutParams();
 
                 // Set the height of the Item View
-                params.height = 400 ;
+                params.height = parent.getHeight() / 4 - 4;
                 view.setLayoutParams(params);
 
                 return view;
@@ -88,12 +95,19 @@ public class CategoryActivity extends AppCompatActivity {
                 for (int i = 0; i < 4; i++) {
                     if (sparseBooleanArray.get(i)) {
                         selected += myList.getItemAtPosition(i).toString() + "\n";
+                        categories.add(catList[i]);
                     }
-
                 }
-                new MainActivity.updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
-                Intent intent = new Intent(CategoryActivity.this, ProjectActivity.class);
-                startActivity(intent);
+                System.out.print(selected);
+                if (categories.size() > 1) {
+                    new MainActivity.updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
+                    Intent intent = new Intent(CategoryActivity.this, ProjectActivity.class);
+                    startActivity(intent);
+                } else {
+                    Snackbar snack = Snackbar.make(findViewById(R.id.CategoryScreen), "Please select at least 2 categories!", Snackbar.LENGTH_LONG);
+                    snack.show();
+                }
+
             }
         });
 
