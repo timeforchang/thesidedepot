@@ -62,9 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 snack.show();
                 if (isEmailValid(email.getText().toString()) && model.logIn(email.getText().toString(), pass.getText().toString())) {
                     //new loginUser(here).execute("https://godhelpusall.com");
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    new loginUser(here).execute("https://sidedepot.herokuapp.com/users/login");
                 } else {
                     snack = Snackbar.make(findViewById(R.id.loginScreen), "Something went wrong!", Snackbar.LENGTH_LONG);
                     snack.show();
@@ -80,9 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                 snack.show();
                 if (isEmailValid(email.getText().toString())) {
                     //new registerUser(here).execute("https://time4cook.herokuapp.com/users/signup");
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    new createUser(here).execute("https://sidedepot.herokuapp.com/users");
                 } else {
                     snack = Snackbar.make(findViewById(R.id.loginScreen), "Something went wrong!", Snackbar.LENGTH_LONG);
                     snack.show();
@@ -99,11 +95,11 @@ public class LoginActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    public class loginUser extends AsyncTask<String, String, String> {
+    public class createUser extends AsyncTask<String, String, String> {
 
         private LoginActivity parent;
 
-        public loginUser(LoginActivity parent) {
+        public createUser(LoginActivity parent) {
             this.parent = parent;
         }
         //New json object (email field, password)
@@ -111,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
                 URL obj = new URL(params[0]);
-                String data = "{email : " + email.getText().toString() +", password: " + pass.getText().toString() +  "}";
+                String data = "{username : " + email.getText().toString() +", password: " + pass.getText().toString() + ", badges: " + new ArrayList<String>() + ", projects: " + new ArrayList<String>() + "}";
 
                 JSONObject jsonData = new JSONObject(data);
                 //Log.d("JSONTest", jsonData.toString());
@@ -139,8 +135,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     in.close();
 
-                    JSONObject myResponse = new JSONObject(response.toString());
-                    System.out.println(myResponse.getString("token"));
+                    //JSONObject myResponse = new JSONObject(response.toString());
+                    //System.out.println(myResponse.getString("result"));
 
 //                    SharedPreferences preferences = LoginActivity.this.getSharedPreferences("CookingToken",MODE_PRIVATE);
 //                    SharedPreferences.Editor editor;
@@ -158,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     parent.runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast.makeText(parent.getBaseContext(), "Either your email or password is incorrect", Toast.LENGTH_LONG).show();
+                            Toast.makeText(parent.getBaseContext(), "Account already exists", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -173,21 +169,20 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public class registerUser extends AsyncTask<String, String, String> {
+    public class loginUser extends AsyncTask<String, String, String> {
 
         private LoginActivity parent;
 
-        public registerUser(LoginActivity parent) {
+        public loginUser(LoginActivity parent) {
             this.parent = parent;
         }
+
         //New json object (email field, password)
         @Override
         protected String doInBackground(String... params) {
             try {
                 URL obj = new URL(params[0]);
-                String data = "{email: '" + email +"', " +
-                        "password: '" + pass +  "'" +
-                        "}";
+                String data = "{username : " + email.getText().toString() + ", password: " + pass.getText().toString() + ", badges: " + new ArrayList<String>() + ", projects: " + new ArrayList<String>() + "}";
 
                 JSONObject jsonData = new JSONObject(data);
                 //Log.d("JSONTest", jsonData.toString());
@@ -217,23 +212,24 @@ public class LoginActivity extends AppCompatActivity {
 
                     //JSONObject myResponse = new JSONObject(response.toString());
                     //System.out.println(myResponse.getString("token"));
-                    System.out.println("here");
-                    parent.runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(parent.getBaseContext(), "Account created! Please login", Toast.LENGTH_LONG).show();
-                        }
-                    });
 
-                    // NEED TO IMPLEMENT EMAIL VERIFICATION SYSTEM
+//                    SharedPreferences preferences = LoginActivity.this.getSharedPreferences("CookingToken",MODE_PRIVATE);
+//                    SharedPreferences.Editor editor;
+//                    editor = preferences.edit();
+//                    editor.putString("JWT Token", myResponse.getString("token"));
+//                    editor.commit();
 
-                    Intent i  = new Intent(LoginActivity.this, MainActivity.class);
+                    //TO RETRIEVE STORED TOKEN: preferences.getString("CookingToken", "No Token");
+
+                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     //i.putExtra("recipeList", recipeList);
                     startActivity(i);
+                    finish();
                 } else {
 
                     parent.runOnUiThread(new Runnable() {
                         public void run() {
-                            Toast.makeText(parent.getBaseContext(), "Email account already exists", Toast.LENGTH_LONG).show();
+                            Toast.makeText(parent.getBaseContext(), "Login Error", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
