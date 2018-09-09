@@ -5,6 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import thesidedepot.app.R;
 
 public class GridAdapter extends BaseAdapter {
     Context context;
@@ -34,6 +37,15 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        if (convertView == null) {
+            view = new View(context);
+            view = layoutInflater.inflate(R.layout.single_item, null);
+            TextView material = (TextView) view.findViewById(R.id.materialName);
+            material.setText(materials[position]);
+        }
+
+        return view;
     }
 }

@@ -1,5 +1,6 @@
 package thesidedepot.app.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,5 +47,9 @@ public class Model {
 
     public List<Build> getBuildList() {
         return um.getBuildList();
+    }
+
+    public void setBuildList(ArrayList<Build> builds) {
+        um.setBuildList(builds);
     }
 }

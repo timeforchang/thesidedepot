@@ -51,4 +51,8 @@ public class UserManager {
     public List<Build> getBuildList() {
         return curUser.get_buildList();
     }
+
+    public void setBuildList(ArrayList<Build> builds) {
+        curUser.set_buildList(builds);
+    }
 }

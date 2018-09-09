@@ -31,5 +31,8 @@ public class HowToActivity extends Activity {
         materialList = (String[]) curBuild.getMaterials().toArray();
 
         materials = (GridView) findViewById(R.id.materials);
+
+        GridAdapter gridAdapter = new GridAdapter(this, materialList);
+        materials.setAdapter(gridAdapter);
     }
 }
