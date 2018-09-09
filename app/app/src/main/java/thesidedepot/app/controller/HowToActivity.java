@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -87,8 +89,8 @@ public class HowToActivity extends AppCompatActivity {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(HowToActivity.this, android.R.style.Theme_Material_Dialog_Alert);
 
-                builder.setTitle("Delete entry")
-                        .setMessage("Are you sure you want to delete this entry?")
+                builder.setTitle("Project Complete")
+                        .setMessage("Mark project as complete?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -106,6 +108,9 @@ public class HowToActivity extends AppCompatActivity {
                                 MainActivity.projIndex++;
 
                                 new MainActivity.updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
+
+                                Intent intent = new Intent(HowToActivity.this, MainActivity.class);
+                                startActivity(intent);
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -118,30 +123,21 @@ public class HowToActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog.Builder builder;
-        builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
-
-        builder.setTitle("Delete entry")
-                .setMessage("Are you sure you want to delete this entry?")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-
-
 
 
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 

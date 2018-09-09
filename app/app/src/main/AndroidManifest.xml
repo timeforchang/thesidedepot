@@ -28,7 +28,11 @@
         <activity android:name=".controller.ProjectActivity" />
         <activity
             android:name=".controller.HowToActivity"
-            android:label="@string/title_activity_how_to" />
+            android:label="@string/title_activity_how_to">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controller.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
