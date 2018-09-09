@@ -12,7 +12,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import thesidedepot.app.R;
+import thesidedepot.app.model.Build;
 import thesidedepot.app.model.Project;
 
 public class CategoryActivity extends AppCompatActivity {

@@ -86,8 +86,8 @@ public class ProfileActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                model.setBadge("HoMaB");
-                HoMaB.setImageResource(R.drawable.bronze);
+                startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                finish();
             }
         });
     }
