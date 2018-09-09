@@ -115,5 +115,11 @@
     <string name="totProj">Projects Total</string>
     <string name="yearProj">Projects This Year</string>
     <string name="home_renovation">Home Renovation Badges</string>
+
+    <string name="hours">Hours</string>
+    <string name="diffi">Difficulty</string>
+    <string name="desc">Description</string>
+    <string name="Tools">Tools &amp; Materials</string>
+    <string name="Steps">Steps</string>
 </resources>
 
