@@ -37,6 +37,7 @@ import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -60,9 +61,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM - yyyy", Locale.getDefault());
     private TextView month;
     private ImageButton monthForward, monthBack;
-    public String currentUser;
+
+    public static String currentUser;
     public static HashMap<String, Project> projectList = new HashMap<>();
     public static ArrayList<Project> myProjectList = new ArrayList<>();
+    public static ArrayList<String> badges = new ArrayList<>();
+    public static boolean firstLoad = true;
+
     private Button currentProj;
     Model model;
 
@@ -78,9 +83,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        //animation.setInterpolator(new DecelerateInterpolator());
 //        //animation.start();
 
-        currentUser = getIntent().getStringExtra("currUser");
-        new loadAllProjectList().execute("https://sidedepot.herokuapp.com/project");
-        new loadProjectList().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
+
+
+        if (firstLoad) {
+            currentUser = getIntent().getStringExtra("currUser");
+
+            new loadAllProjectList().execute("https://sidedepot.herokuapp.com/project");
+            new loadProjectList().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
+
+            firstLoad = false;
+        }
+
+        System.out.println(projectList.size());
+
 
         month = (TextView) findViewById(R.id.month);
         month.setText(dateFormatMonth.format(Calendar.getInstance().getTime()));
@@ -142,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 while (builds.get(index).is_done()) {
                     index++;
                 }
-
+                new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
                 Build currentBuild = builds.get(index);
                 Intent i = new Intent(MainActivity.this, HowToActivity.class);
                 i.putExtra("curBuild", currentBuild);
@@ -210,10 +225,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) { //Calendar
+            new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
             Intent intent = new Intent(MainActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_slideshow) { //Project Areas
+            new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
             Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
             intent.putExtra("myBuilds", myProjectList);
             startActivity(intent);
@@ -263,12 +280,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.d("Total Length", "val = " + myResponse.getJSONArray("message").length());
 
                 JSONArray currProjects = myResponse.getJSONArray("message").getJSONObject(0).getJSONArray("projects");
+                JSONArray currBadges = myResponse.getJSONArray("message").getJSONObject(0).getJSONArray("badges");
 
                 for (int count = 0; count < currProjects.length(); count++) {
 
                     myProjectList.add(projectList.get(currProjects.getString(count)));
 
+
                 }
+                for (int count = 0; count < currBadges.length(); count++) {
+                    badges.add(currBadges.getString(count));
+                }
+
 
 //                JSONArray parsedSteps;
 //                JSONArray parsedHeaders;
@@ -386,7 +409,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     parsedSteps = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("parsedSteps");
                     parsedHeaders = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("parsedHeaders");
                     toolsAndMaterials = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("toolsAndMaterials");
-                    webCollection = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("webCollection");
+                    webCollection = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("weblinks");
 
                     for (int i=0; i<parsedSteps.length(); i++) {
                         finalSteps.add( parsedSteps.getString(i) );
@@ -434,6 +457,74 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return null;
         }
     }
+
+
+
+    public static class updateUser extends AsyncTask<String, String, String> {
+
+
+
+        //New json object (email field, password)
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                URL obj = new URL(params[0]);
+                String data = "{username : " + currentUser + ", badges: " + badges + ", projects: " + myProjectList + "}";
+
+                JSONObject jsonData = new JSONObject(data);
+                //Log.d("JSONTest", jsonData.toString());
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+                // optional default is GET
+                con.setDoOutput(true);
+                con.setInstanceFollowRedirects(false);
+                con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                con.setRequestProperty("Accept", "application/json");
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(con.getOutputStream());
+                Log.d("JSONTest", jsonData.toString());
+                outputStreamWriter.write(jsonData.toString());
+                outputStreamWriter.flush();
+                con.setRequestMethod("POST");
+                int responseCode = con.getResponseCode();
+
+                if (responseCode == 200) {
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(con.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+
+                    //JSONObject myResponse = new JSONObject(response.toString());
+                    //System.out.println(myResponse.getString("token"));
+
+//                    SharedPreferences preferences = LoginActivity.this.getSharedPreferences("CookingToken",MODE_PRIVATE);
+//                    SharedPreferences.Editor editor;
+//                    editor = preferences.edit();
+//                    editor.putString("JWT Token", myResponse.getString("token"));
+//                    editor.commit();
+
+                    //TO RETRIEVE STORED TOKEN: preferences.getString("CookingToken", "No Token");
+
+
+                } else {
+
+
+                }
+                //System.out.println("\nSending 'GET' request to URL : " + url);
+
+                //Log.d("JSONTest", jsonData.toString());
+
+            } catch (Exception exception) {
+                Log.d("hi", exception.toString());
+            }
+            return null;
+        }
+    }
+
+
 
 
 }

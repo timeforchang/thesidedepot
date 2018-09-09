@@ -18,6 +18,8 @@ import thesidedepot.app.R;
 import thesidedepot.app.model.Build;
 import thesidedepot.app.model.Project;
 
+import static thesidedepot.app.controller.MainActivity.currentUser;
+
 public class CategoryActivity extends AppCompatActivity {
 
     ListView myList;
@@ -89,6 +91,7 @@ public class CategoryActivity extends AppCompatActivity {
                     }
 
                 }
+                new MainActivity.updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
                 Intent intent = new Intent(CategoryActivity.this, ProjectActivity.class);
                 startActivity(intent);
             }
