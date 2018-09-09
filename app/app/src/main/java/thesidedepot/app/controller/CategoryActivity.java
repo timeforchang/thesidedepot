@@ -58,8 +58,7 @@ public class CategoryActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams params = view.getLayoutParams();
 
                 // Set the height of the Item View
-                count+= 20;
-                params.height = 300 + count;
+                params.height = 300 ;
                 view.setLayoutParams(params);
 
                 return view;
@@ -81,7 +80,7 @@ public class CategoryActivity extends AppCompatActivity {
                 String selected = "";
                 int cntChoice = myList.getCount();
                 SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
-                for (int i = 0; i < cntChoice; i++) {
+                for (int i = 0; i < 4; i++) {
                     if (sparseBooleanArray.get(i)) {
                         selected += myList.getItemAtPosition(i).toString() + "\n";
                     }
