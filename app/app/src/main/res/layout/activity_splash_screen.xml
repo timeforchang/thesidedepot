@@ -5,12 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/gradient"
     tools:context=".controller.SplashScreenActivity">
-    
+
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/thdlogo"
+        android:layout_width="266dp"
+        android:layout_height="355dp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:src="@drawable/sidelogo" />
 
 </RelativeLayout>
