@@ -58,7 +58,7 @@ public class CategoryActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams params = view.getLayoutParams();
 
                 // Set the height of the Item View
-                params.height = 300 ;
+                params.height = 400 ;
                 view.setLayoutParams(params);
 
                 return view;
