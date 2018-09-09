@@ -240,6 +240,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ProgressBar diy = (ProgressBar) findViewById(R.id.progressBar2);
+        ProgressBar ren = (ProgressBar) findViewById(R.id.progressBar6);
+        ProgressBar main = (ProgressBar) findViewById(R.id.progressBar);
+        ProgressBar out = (ProgressBar) findViewById(R.id.progressBar5);
+        ProgressBar totalProgress = (ProgressBar) findViewById(R.id.progressBar7);
+
+        diy.setProgress(DIYDone);
+        ren.setProgress(RenDone);
+        main.setProgress(MainDone);
+        out.setProgress(OutDone);
+        totalProgress.setProgress(totalDone);
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
