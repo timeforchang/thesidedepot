@@ -49,12 +49,10 @@ import java.util.List;
 import java.util.Locale;
 
 import thesidedepot.app.R;
-<<<<<<< HEAD
 import thesidedepot.app.model.Project;
-=======
 import thesidedepot.app.model.Build;
 import thesidedepot.app.model.Model;
->>>>>>> 31a94c4b15b73d3e32ad8b97d1b1c937489571ff
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -63,14 +61,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM - yyyy", Locale.getDefault());
     private TextView month;
     private ImageButton monthForward, monthBack;
-<<<<<<< HEAD
+
     public String currentUser;
     public static HashMap<String, Project> projectList = new HashMap<>();
     public static ArrayList<Project> myProjectList = new ArrayList<>();
-=======
+
     private Button currentProj;
     Model model;
->>>>>>> 31a94c4b15b73d3e32ad8b97d1b1c937489571ff
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
