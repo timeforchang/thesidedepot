@@ -69,7 +69,7 @@ public class HowToActivity extends AppCompatActivity {
         Picasso.get().load(MainActivity.myProjectList.get(0).getImage()).into(image);
 
         desc = (TextView) findViewById(R.id.desc);
-        desc.setText(MainActivity.myProjectList.get(0).getDescription() + " and the estimated price of this project is " + MainActivity.myProjectList.get(0).getPriceEstimate());
+        desc.setText(MainActivity.myProjectList.get(0).getDescription() + "and the estimated price of this project is $" + MainActivity.myProjectList.get(0).getPriceEstimate() + ".");
         
         time = (TextView) findViewById(R.id.totProjTime);
         time.setText(MainActivity.myProjectList.get(0).getTime());
