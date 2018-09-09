@@ -1,13 +1,12 @@
 package thesidedepot.app.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User implements Parcelable {
+
+public class User implements Serializable {
     private String _username;
     private String _pWord;
     private boolean _loggedIn;
@@ -102,49 +101,4 @@ public class User implements Parcelable {
         }
         return ret;
     }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this._username);
-        dest.writeString(this._pWord);
-        dest.writeByte(this._loggedIn ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(this._buildList);
-        dest.writeInt(this._badges.size());
-        for (Map.Entry<String, Boolean> entry : this._badges.entrySet()) {
-            dest.writeString(entry.getKey());
-            dest.writeValue(entry.getValue());
-        }
-    }
-
-    protected User(Parcel in) {
-        this._username = in.readString();
-        this._pWord = in.readString();
-        this._loggedIn = in.readByte() != 0;
-        this._buildList = in.createTypedArrayList(Build.CREATOR);
-        int _badgesSize = in.readInt();
-        this._badges = new HashMap<String, Boolean>(_badgesSize);
-        for (int i = 0; i < _badgesSize; i++) {
-            String key = in.readString();
-            Boolean value = (Boolean) in.readValue(Boolean.class.getClassLoader());
-            this._badges.put(key, value);
-        }
-    }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel source) {
-            return new User(source);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
 }

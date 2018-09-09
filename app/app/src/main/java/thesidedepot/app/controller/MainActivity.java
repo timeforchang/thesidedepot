@@ -49,7 +49,12 @@ import java.util.List;
 import java.util.Locale;
 
 import thesidedepot.app.R;
+<<<<<<< HEAD
 import thesidedepot.app.model.Project;
+=======
+import thesidedepot.app.model.Build;
+import thesidedepot.app.model.Model;
+>>>>>>> 31a94c4b15b73d3e32ad8b97d1b1c937489571ff
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -58,15 +63,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM - yyyy", Locale.getDefault());
     private TextView month;
     private ImageButton monthForward, monthBack;
+<<<<<<< HEAD
     public String currentUser;
     public static HashMap<String, Project> projectList = new HashMap<>();
     public static ArrayList<Project> myProjectList = new ArrayList<>();
+=======
+    private Button currentProj;
+    Model model;
+>>>>>>> 31a94c4b15b73d3e32ad8b97d1b1c937489571ff
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        model = Model.getInstance();
 //        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 //        ObjectAnimator animation = ObjectAnimator.ofInt(progressBar, "progress", 0, 10); // see this max value coming back here, we animate towards that value
 //        //animation.setDuration(5000); // in milliseconds
@@ -127,6 +138,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        currentProj = (Button) findViewById(R.id.projectButton);
+        currentProj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Build> builds = model.getBuildList();
+                int index = 0;
+                while (builds.get(index).is_done()) {
+                    index++;
+                }
+
+                Build currentBuild = builds.get(index);
+                Intent i = new Intent(MainActivity.this, HowToActivity.class);
+                i.putExtra("curBuild", currentBuild);
+                startActivity(i);
+            }
+        });
 
         Button fab = (Button) findViewById(R.id.nav_button);
         fab.setOnClickListener(new View.OnClickListener() {
