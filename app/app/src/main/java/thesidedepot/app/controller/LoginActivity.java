@@ -222,7 +222,7 @@ public class LoginActivity extends AppCompatActivity {
                     //TO RETRIEVE STORED TOKEN: preferences.getString("CookingToken", "No Token");
 
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    //i.putExtra("recipeList", recipeList);
+                    i.putExtra("currUser", email.getText().toString());
                     startActivity(i);
                     finish();
                 } else {

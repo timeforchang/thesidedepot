@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -30,15 +31,25 @@ import android.widget.Toast;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import thesidedepot.app.R;
+import thesidedepot.app.model.Project;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -47,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM - yyyy", Locale.getDefault());
     private TextView month;
     private ImageButton monthForward, monthBack;
+    public String currentUser;
+    public static HashMap<String, Project> projectList = new HashMap<>();
+    public static ArrayList<Project> myProjectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        //animation.setDuration(5000); // in milliseconds
 //        //animation.setInterpolator(new DecelerateInterpolator());
 //        //animation.start();
+
+        currentUser = getIntent().getStringExtra("currUser");
+        new loadAllProjectList().execute("https://sidedepot.herokuapp.com/project");
+        new loadProjectList().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
 
         month = (TextView) findViewById(R.id.month);
         month.setText(dateFormatMonth.format(Calendar.getInstance().getTime()));
@@ -188,5 +206,212 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     }
+
+    public class loadProjectList extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                URL obj = new URL(params[0]);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                // optional default is GET
+                con.setRequestMethod("GET");
+                //add request header
+                //con.setRequestProperty("User-Agent", "Mozilla/5.0");
+                int responseCode = con.getResponseCode();
+                //System.out.println("\nSending 'GET' request to URL : " + url);
+
+
+                //USE THIS CODE TO CHECK RESPONSE CODE FOR INVALID TOKEN
+
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                //print in String
+                //System.out.println(response.toString());
+                //Read JSON response and print
+                JSONObject myResponse = new JSONObject(response.toString());
+                Log.d("Total Length", "val = " + myResponse.getJSONArray("message").length());
+
+                JSONArray currProjects = myResponse.getJSONArray("message").getJSONObject(0).getJSONArray("projects");
+
+                for (int count = 0; count < currProjects.length(); count++) {
+
+                    myProjectList.add(projectList.get(currProjects.getString(count)));
+
+                }
+
+//                JSONArray parsedSteps;
+//                JSONArray parsedHeaders;
+//                JSONArray toolsAndMaterials;
+//                JSONArray webCollection;
+//                ArrayList<String> finalSteps = new ArrayList<>();
+//                ArrayList<String> finalHeaders = new ArrayList<>();
+//                ArrayList<String> finalTools = new ArrayList<>();
+//                ArrayList<String> finalWeb = new ArrayList<>();
+
+
+//                for (int count = 0; count < myResponse.getJSONArray("message").length(); count ++) {
+//
+//
+//                    parsedSteps = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("parsedSteps");
+//                    parsedHeaders = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("parsedHeaders");
+//                    toolsAndMaterials = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("toolsAndMaterials");
+//                    webCollection = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("webCollection");
+//
+//                    for (int i=0; i<parsedSteps.length(); i++) {
+//                        finalSteps.add( parsedSteps.getString(i) );
+//                    }
+//                    for (int i=0; i<parsedHeaders.length(); i++) {
+//                        finalHeaders.add( parsedHeaders.getString(i) );
+//                    }
+//
+//                    for (int i=0; i<toolsAndMaterials.length(); i++) {
+//                        finalTools.add( toolsAndMaterials.getString(i) );
+//                    }
+//
+//                    for (int i=0; i<webCollection.length(); i++) {
+//                        finalWeb.add( webCollection.getString(i) );
+//                    }
+//
+//
+//                    projectList.add(
+//
+//
+//                            new Project(myResponse.getJSONArray("message").getJSONObject(count).getString("title"),
+//                                    myResponse.getJSONArray("message").getJSONObject(count).getString("description"),
+//                                    myResponse.getJSONArray("message").getJSONObject(count).getString("difficulty"),
+//                                    myResponse.getJSONArray("message").getJSONObject(count).getString("category"),
+//                                    finalTools,
+//                                    myResponse.getJSONArray("message").getJSONObject(count).getString("time"),
+//                                    myResponse.getJSONArray("message").getJSONObject(count).getString("image"),
+//                                    myResponse.getJSONArray("message").getJSONObject(count).getDouble("priceEstimate"),
+//                                    finalSteps, finalHeaders, finalWeb));
+//                }
+
+
+
+
+
+                //Log.d("hi", "Loading intent");
+                //Collectionsons.shuffle(recipeList);
+                //Intent i  = new Intent(LoaderActivity.this, MainRecipeActivity.class);
+                //i.putExtra("recipeList", recipeList);
+                //startActivity(i);
+
+            } catch (Exception exception) {
+                Log.d("hi", exception.toString());
+            }
+            return null;
+        }
+    }
+
+
+    public class loadAllProjectList extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+
+                URL obj = new URL(params[0]);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                // optional default is GET
+                con.setRequestMethod("GET");
+                //add request header
+                //con.setRequestProperty("User-Agent", "Mozilla/5.0");
+                int responseCode = con.getResponseCode();
+                //System.out.println("\nSending 'GET' request to URL : " + url);
+
+
+                //USE THIS CODE TO CHECK RESPONSE CODE FOR INVALID TOKEN
+
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                //print in String
+                //System.out.println(response.toString());
+                //Read JSON response and print
+                JSONObject myResponse = new JSONObject(response.toString());
+                Log.d("Total Length", "val = " + myResponse.getJSONArray("message").length());
+
+
+
+                JSONArray parsedSteps;
+                JSONArray parsedHeaders;
+                JSONArray toolsAndMaterials;
+                JSONArray webCollection;
+                ArrayList<String> finalSteps = new ArrayList<>();
+                ArrayList<String> finalHeaders = new ArrayList<>();
+                ArrayList<String> finalTools = new ArrayList<>();
+                ArrayList<String> finalWeb = new ArrayList<>();
+
+
+                for (int count = 0; count < myResponse.getJSONArray("message").length(); count ++) {
+
+
+                    parsedSteps = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("parsedSteps");
+                    parsedHeaders = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("parsedHeaders");
+                    toolsAndMaterials = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("toolsAndMaterials");
+                    webCollection = myResponse.getJSONArray("message").getJSONObject(count).getJSONArray("webCollection");
+
+                    for (int i=0; i<parsedSteps.length(); i++) {
+                        finalSteps.add( parsedSteps.getString(i) );
+                    }
+                    for (int i=0; i<parsedHeaders.length(); i++) {
+                        finalHeaders.add( parsedHeaders.getString(i) );
+                    }
+
+                    for (int i=0; i<toolsAndMaterials.length(); i++) {
+                        finalTools.add( toolsAndMaterials.getString(i) );
+                    }
+
+                    for (int i=0; i<webCollection.length(); i++) {
+                        finalWeb.add( webCollection.getString(i) );
+                    }
+
+
+                    projectList.put(myResponse.getJSONArray("message").getJSONObject(count).getString("title"),
+
+
+                            new Project(myResponse.getJSONArray("message").getJSONObject(count).getString("title"),
+                                    myResponse.getJSONArray("message").getJSONObject(count).getString("description"),
+                                    myResponse.getJSONArray("message").getJSONObject(count).getString("difficulty"),
+                                    myResponse.getJSONArray("message").getJSONObject(count).getString("category"),
+                                    finalTools,
+                                    myResponse.getJSONArray("message").getJSONObject(count).getString("time"),
+                                    myResponse.getJSONArray("message").getJSONObject(count).getString("image"),
+                                    myResponse.getJSONArray("message").getJSONObject(count).getDouble("priceEstimate"),
+                                    finalSteps, finalHeaders, finalWeb));
+                }
+
+
+
+
+
+                        Log.d("hi", "Loading intent");
+                //Collectionsons.shuffle(recipeList);
+                //Intent i  = new Intent(LoaderActivity.this, MainRecipeActivity.class);
+                //i.putExtra("recipeList", recipeList);
+                //startActivity(i);
+
+            } catch (Exception exception) {
+                Log.d("hi", exception.toString());
+            }
+            return null;
+        }
+    }
+
+
 }
 
