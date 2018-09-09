@@ -469,7 +469,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected String doInBackground(String... params) {
             try {
                 URL obj = new URL(params[0]);
-                String data = "{username : " + currentUser + ", badges: " + badges + ", projects: " + myProjectList + "}";
+                ArrayList<String> projects = new ArrayList<>();
+                for (int i = 0; i < myProjectList.size(); i++) {
+                    projects.add(myProjectList.get(i).getTitle());
+                }
+                ArrayList<String> badgesPass = new ArrayList<>();
+                for (int i = 0; i < badges.size(); i++) {
+                    badgesPass.add(badges.get(i));
+                }
+
+                String data = "{\"username\" : " + "'" + currentUser + "'" + ", \"badges\": " + new JSONArray(badgesPass) + ", \"projects\": " + new JSONArray(projects) + "}";
 
                 JSONObject jsonData = new JSONObject(data);
                 //Log.d("JSONTest", jsonData.toString());

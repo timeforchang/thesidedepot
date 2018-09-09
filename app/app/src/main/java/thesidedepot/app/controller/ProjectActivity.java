@@ -22,6 +22,8 @@ import thesidedepot.app.model.Build;
 import thesidedepot.app.model.Model;
 import thesidedepot.app.model.Project;
 
+import static thesidedepot.app.controller.MainActivity.currentUser;
+
 public class ProjectActivity extends AppCompatActivity {
     Model model;
     private ListView lv;
@@ -85,6 +87,7 @@ public class ProjectActivity extends AppCompatActivity {
         confirm_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new MainActivity.updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
                 MainActivity.myProjectList = generated;
                 Intent intent = new Intent(ProjectActivity.this, MainActivity.class);
                 startActivity(intent);
