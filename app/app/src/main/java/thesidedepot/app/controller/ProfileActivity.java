@@ -20,11 +20,14 @@ import java.util.Map;
 import thesidedepot.app.R;
 import thesidedepot.app.model.Model;
 
+import static thesidedepot.app.controller.MainActivity.currentUser;
+
 public class ProfileActivity extends AppCompatActivity {
     Model model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println(MainActivity.projectList.size());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
@@ -104,6 +107,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        new MainActivity.updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
         startActivity(new Intent(ProfileActivity.this, MainActivity.class));
         finish();
     }
