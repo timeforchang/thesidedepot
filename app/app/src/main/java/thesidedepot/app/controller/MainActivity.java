@@ -581,8 +581,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    ProgressBar diy = (ProgressBar) findViewById(R.id.progressBar2);
 
-
+    ProgressBar ren = (ProgressBar) findViewById(R.id.progressBar6);
+    ProgressBar main = (ProgressBar) findViewById(R.id.progressBar);
+    ProgressBar out = (ProgressBar) findViewById(R.id.progressBar5);
 
 }
 

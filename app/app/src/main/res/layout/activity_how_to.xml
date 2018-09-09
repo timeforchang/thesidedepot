@@ -34,14 +34,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/hammers"
-                    android:id="@+id/profile_image"
+                    android:id="@+id/howto_image"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true">
                 </ImageView>
+                <Button
+                    android:id="@+id/completionButton"
+                    android:layout_width="90dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="310dp"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:text="Complete"/>
             </FrameLayout>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/profileToolbar"
+                android:id="@+id/howtoToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"

@@ -11,7 +11,7 @@
 
     <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
@@ -51,6 +51,8 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -79,49 +81,31 @@
         </LinearLayout>
     </LinearLayout>
 
-        <TextView
-            android:id="@+id/desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="Description yada ayads oafoasdb cool filler stuff more stuff so i can test 2 lines thanks" />
-
-        <TextView
+    <TextView
+        android:id="@+id/desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:gravity="center_vertical"
-        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
-        android:text="@string/Tools"
-        android:textColor="@color/colorWhite"
-        android:textSize="12sp"
-        android:layout_marginTop="25dp" />
-
-    <GridView
-        android:id="@+id/materials"
-        android:numColumns="auto_fit"
-        android:columnWidth="100dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:text="Description yada ayads oafoasdb cool filler stuff more stuff so i can test 2 lines thanks" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:gravity="center_vertical"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:text="@string/Steps"
-        android:textColor="@color/colorWhite"
-        android:textSize="12sp" />
+        android:paddingTop="50dp"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:text="See below for Instructions:"/>
 
-    <ListView
-        android:id="@+id/steps"
+    <TextView
+        android:id="@+id/link"
+        android:autoLink="all"
+        android:clickable="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:text="See below for Instructions:"/>
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
