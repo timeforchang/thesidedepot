@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -109,17 +110,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         compactCalendarView.setUseThreeLetterAbbreviation(true);
 
         //Event ev1 = new Event(Color.RED, 1540123200000L, "Teachers' Professional Day");
-        if (myProjectList != null) {
-            Event ev2 = new Event(Color.GREEN ,1536651337L, myProjectList.get(0).getTitle());
-            Event ev3 = new Event(Color.GREEN, 1540539337L, myProjectList.get(1).getTitle());
-            Event ev4 = new Event(Color.GREEN, 1541835337L, myProjectList.get(2).getTitle());
-            Event ev5 = new Event(Color.YELLOW, 1546155337L, myProjectList.get(3).getTitle());
-            Event ev6 = new Event(Color.GREEN, 1547105737L, myProjectList.get(4).getTitle());
-            Event ev7 = new Event(Color.YELLOW, 1549697737L, myProjectList.get(5).getTitle());
-            Event ev8 = new Event(Color.RED, 1555140937L, myProjectList.get(6).getTitle());
-            Event ev9 = new Event(Color.YELLOW, 1560065737L, myProjectList.get(7).getTitle());
-            Event ev10 = new Event(Color.RED, 1564040137L, myProjectList.get(8).getTitle());
-            Event ev11 = new Event(Color.RED, 1565336137L, myProjectList.get(9).getTitle());
+        System.out.print("HENLO" + " " + myProjectList.size());
+        if (myProjectList.size() > 0) {
+            Event ev2 = new Event(Color.GREEN ,1536651337000L, myProjectList.get(0).getTitle());
+            Event ev3 = new Event(Color.GREEN, 1540539337000L, myProjectList.get(1).getTitle());
+            Event ev4 = new Event(Color.GREEN, 1541835337000L, myProjectList.get(2).getTitle());
+            Event ev5 = new Event(Color.YELLOW, 1546155337000L, myProjectList.get(3).getTitle());
+            Event ev6 = new Event(Color.GREEN, 1547105737000L, myProjectList.get(4).getTitle());
+            Event ev7 = new Event(Color.YELLOW, 1549697737000L, myProjectList.get(5).getTitle());
+            Event ev8 = new Event(Color.RED, 1555140937000L, myProjectList.get(6).getTitle());
+            Event ev9 = new Event(Color.YELLOW, 1560065737000L, myProjectList.get(7).getTitle());
+            Event ev10 = new Event(Color.RED, 1564040137000L, myProjectList.get(8).getTitle());
+            Event ev11 = new Event(Color.RED, 1565336137000L, myProjectList.get(9).getTitle());
             compactCalendarView.addEvent(ev2);
             compactCalendarView.addEvent(ev3);
             compactCalendarView.addEvent(ev4);
@@ -137,10 +139,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDayClick(Date dateClicked) {
                 Context context = getApplicationContext();
-                if (dateClicked.toString().compareTo("Sun Oct 21 00:00:00 EDT 2018") == 0) {
-                    Toast.makeText(context, "Teachers' Professional Day", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "No Events Planned for that day", Toast.LENGTH_SHORT).show();
+                if (dateClicked.toString().compareTo("Tue Sep 11 00:00:00 EDT 2018") == 0) {
+                    Toast.makeText(context, myProjectList.get(0).getTitle(), Toast.LENGTH_SHORT).show();
+                } else if (dateClicked.toString().compareTo("Fri Oct 26 00:00:00 EDT 2018") == 0) {
+                    Toast.makeText(context, myProjectList.get(1).getTitle(), Toast.LENGTH_SHORT).show();
+                } else if (dateClicked.toString().compareTo("Sat Nov 10 00:00:00 EDT 2018") == 0) {
+                    Toast.makeText(context, myProjectList.get(2).getTitle(), Toast.LENGTH_SHORT).show();
+
+                } else if (dateClicked.toString().compareTo("Sun Dec 30 00:00:00 EST 2018") == 0) {
+                    Toast.makeText(context, myProjectList.get(3).getTitle(), Toast.LENGTH_SHORT).show();
+
+                } else if (dateClicked.toString().compareTo("Thu Jan 10 00:00:00 EST 2019") == 0) {
+                    Toast.makeText(context, myProjectList.get(4).getTitle(), Toast.LENGTH_SHORT).show();
+
+                } else if (dateClicked.toString().compareTo("Sat Feb 09 00:00:00 EST 2019") == 0) {
+                    Toast.makeText(context, myProjectList.get(5).getTitle(), Toast.LENGTH_SHORT).show();
+
+                } else if (dateClicked.toString().compareTo("Sat Apr 13 00:00:00 EDT 2019") == 0) {
+                    Toast.makeText(context, myProjectList.get(6).getTitle(), Toast.LENGTH_SHORT).show();
+
+                } else if (dateClicked.toString().compareTo("Sun Jun 09 00:00:00 EDT 2019") == 0) {
+                    Toast.makeText(context, myProjectList.get(7).getTitle(), Toast.LENGTH_SHORT).show();
+
+                } else if (dateClicked.toString().compareTo("Thu Jul 25 00:00:00 EDT 2019") == 0) {
+                    Toast.makeText(context, myProjectList.get(8).getTitle(), Toast.LENGTH_SHORT).show();
+
+                } else if (dateClicked.toString().compareTo("Fri Aug 09 00:00:00 EDT 2019") == 0) {
+                    Toast.makeText(context, myProjectList.get(9).getTitle(), Toast.LENGTH_SHORT).show();
+
                 }
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
                 Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
@@ -261,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public class loadProjectList extends AsyncTask<String, String, String> {
+    public static class loadProjectList extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -364,6 +390,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //Intent i  = new Intent(LoaderActivity.this, MainRecipeActivity.class);
                 //i.putExtra("recipeList", recipeList);
                 //startActivity(i);
+                return null;
 
             } catch (Exception exception) {
                 Log.d("hi", exception.toString());
@@ -464,6 +491,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //Intent i  = new Intent(LoaderActivity.this, MainRecipeActivity.class);
                 //i.putExtra("recipeList", recipeList);
                 //startActivity(i);
+                return null;
 
             } catch (Exception exception) {
                 Log.d("hi", exception.toString());
@@ -487,10 +515,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 for (int i = 0; i < myProjectList.size(); i++) {
                     projects.add(myProjectList.get(i).getTitle());
                 }
+                myProjectList.clear();
                 ArrayList<String> badgesPass = new ArrayList<>();
                 for (int i = 0; i < badges.size(); i++) {
                     badgesPass.add(badges.get(i));
                 }
+                badges.clear();
 
                 String data = "{\"username\" : " + "'" + currentUser + "'" + ", \"badges\": " + new JSONArray(badgesPass) + ", \"projects\": " + new JSONArray(projects) + "}";
 
@@ -509,6 +539,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 outputStreamWriter.flush();
                 con.setRequestMethod("POST");
                 int responseCode = con.getResponseCode();
+
+
 
                 if (responseCode == 200) {
                     BufferedReader in = new BufferedReader(
@@ -530,6 +562,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                    editor.commit();
 
                     //TO RETRIEVE STORED TOKEN: preferences.getString("CookingToken", "No Token");
+                    new loadProjectList().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
+                    return null;
 
 
                 } else {
