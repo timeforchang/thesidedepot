@@ -264,7 +264,7 @@
         android:text="Outdoor" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/projectButton"
         android:text="Current Project"
         android:textColor="@color/colorWhite"
         android:background="@color/colorPrimaryDark"

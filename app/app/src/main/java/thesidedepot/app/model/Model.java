@@ -1,5 +1,6 @@
 package thesidedepot.app.model;
 
+import java.util.List;
 import java.util.Map;
 
 import thesidedepot.app.data.UserManager;
@@ -41,5 +42,9 @@ public class Model {
 
     public void setBadge(String key) {
         um.setBadge(key);
+    }
+
+    public List<Build> getBuildList() {
+        return um.getBuildList();
     }
 }
