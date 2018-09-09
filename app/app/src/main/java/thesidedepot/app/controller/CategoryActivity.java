@@ -34,6 +34,10 @@ public class CategoryActivity extends AppCompatActivity {
             "", "", "", ""
     };
 
+    String[] catList = {
+            "Home Renovation", "Home Maintenance", "Lawn, Garden, & Outdoor", "DIY, Decor & Fun"
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +95,7 @@ public class CategoryActivity extends AppCompatActivity {
                 for (int i = 0; i < 4; i++) {
                     if (sparseBooleanArray.get(i)) {
                         selected += myList.getItemAtPosition(i).toString() + "\n";
-                        categories.add(myList.getItemAtPosition(i).toString());
+                        categories.add(catList[i]);
                     }
                 }
                 System.out.print(selected);

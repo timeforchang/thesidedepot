@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,24 +16,32 @@ import java.util.List;
 import thesidedepot.app.R;
 import thesidedepot.app.model.Build;
 import thesidedepot.app.model.Model;
+import thesidedepot.app.model.Project;
 
 public class HowToActivity extends Activity {
     GridView materials;
     Model model;
+    TextView desc, time, diff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_how_to);
 
-        model = Model.getInstance();
+        Project cur = MainActivity.myProjectList.get(0);
 
-        Intent i = getIntent();
-        Build curBuild = (Build) i.getSerializableExtra("curBuild");
+        desc = (TextView) findViewById(R.id.desc);
+        desc.setText(cur.getDescription());
 
-        String[] materialList = new String[curBuild.getMaterials().size()];
+        time = (TextView) findViewById(R.id.totProjTime);
+        time.setText(cur.getTime());
 
-        materialList = (String[]) curBuild.getMaterials().toArray();
+        diff = (TextView) findViewById(R.id.diff);
+        diff.setText(cur.getDifficulty());
+
+        String[] materialList = new String[cur.getToolsAndMaterials().size()];
+
+        materialList = (String[]) cur.getToolsAndMaterials().toArray(materialList);
 
         materials = (GridView) findViewById(R.id.materials);
 

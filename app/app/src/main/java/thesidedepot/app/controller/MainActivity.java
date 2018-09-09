@@ -108,8 +108,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         compactCalendarView.setLocale(Calendar.getInstance().getTimeZone(), Locale.getDefault());
         compactCalendarView.setUseThreeLetterAbbreviation(true);
 
-        Event ev1 = new Event(Color.RED, 1540123200000L, "Teachers' Professional Day");
-        compactCalendarView.addEvent(ev1);
+        //Event ev1 = new Event(Color.RED, 1540123200000L, "Teachers' Professional Day");
+        if (myProjectList != null) {
+            Event ev2 = new Event(Color.GREEN ,1536651337L, myProjectList.get(0).getTitle());
+            Event ev3 = new Event(Color.GREEN, 1540539337L, myProjectList.get(1).getTitle());
+            Event ev4 = new Event(Color.GREEN, 1541835337L, myProjectList.get(2).getTitle());
+            Event ev5 = new Event(Color.YELLOW, 1546155337L, myProjectList.get(3).getTitle());
+            Event ev6 = new Event(Color.GREEN, 1547105737L, myProjectList.get(4).getTitle());
+            Event ev7 = new Event(Color.YELLOW, 1549697737L, myProjectList.get(5).getTitle());
+            Event ev8 = new Event(Color.RED, 1555140937L, myProjectList.get(6).getTitle());
+            Event ev9 = new Event(Color.YELLOW, 1560065737L, myProjectList.get(7).getTitle());
+            Event ev10 = new Event(Color.RED, 1564040137L, myProjectList.get(8).getTitle());
+            Event ev11 = new Event(Color.RED, 1565336137L, myProjectList.get(9).getTitle());
+            compactCalendarView.addEvent(ev2);
+            compactCalendarView.addEvent(ev3);
+            compactCalendarView.addEvent(ev4);
+            compactCalendarView.addEvent(ev5);
+            compactCalendarView.addEvent(ev6);
+            compactCalendarView.addEvent(ev7);
+            compactCalendarView.addEvent(ev8);
+            compactCalendarView.addEvent(ev9);
+            compactCalendarView.addEvent(ev10);
+            compactCalendarView.addEvent(ev11);
+        }
+
 
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
@@ -152,15 +174,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         currentProj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Build> builds = model.getBuildList();
-                int index = 0;
-                while (builds.get(index).is_done()) {
-                    index++;
-                }
-                new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
-                Build currentBuild = builds.get(index);
                 Intent i = new Intent(MainActivity.this, HowToActivity.class);
-                i.putExtra("curBuild", currentBuild);
                 startActivity(i);
             }
         });
