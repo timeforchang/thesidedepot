@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/hammers"
-                    android:id="@+id/profile_image"
+                    android:id="@+id/howto_image"
                     android:scaleType="centerCrop"
                     android:adjustViewBounds="true">
                 </ImageView>
@@ -51,7 +51,7 @@
             </FrameLayout>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/profileToolbar"
+                android:id="@+id/howtoToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
