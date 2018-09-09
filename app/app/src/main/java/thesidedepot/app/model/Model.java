@@ -1,5 +1,7 @@
 package thesidedepot.app.model;
 
+import java.util.Map;
+
 import thesidedepot.app.data.UserManager;
 
 public class Model {
@@ -31,5 +33,13 @@ public class Model {
 
     public boolean signUp(String email, String pass) {
         return um.registerUser(email, pass);
+    }
+
+    public Map<String, Boolean> getBadges() {
+        return um.getBadges();
+    }
+
+    public void setBadge(String key) {
+        um.setBadge(key);
     }
 }

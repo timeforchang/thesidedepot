@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 Snackbar snack = Snackbar.make(findViewById(R.id.loginScreen), "logging you in...", Snackbar.LENGTH_LONG);
                 System.out.println("logged in");
                 snack.show();
-                if (isEmailValid(email.getText().toString())) {
+                if (isEmailValid(email.getText().toString()) && model.logIn(email.getText().toString(), pass.getText().toString())) {
                     //new loginUser(here).execute("https://godhelpusall.com");
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);

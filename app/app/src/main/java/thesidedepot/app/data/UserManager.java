@@ -1,6 +1,7 @@
 package thesidedepot.app.data;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import thesidedepot.app.model.Build;
 import thesidedepot.app.model.User;
@@ -18,9 +19,9 @@ public class UserManager {
     }
 
     public boolean logInUser(String email, String pass) {
-        scripting.loginUser(email, pass);
+        //scripting.loginUser(email, pass);
         User newUser = new User(email, pass, true, new ArrayList<Build>());
-        if (scripting.loginUser(email, pass)) {
+        if (true) {
             setUser(newUser);
             return true;
         } else {
@@ -36,5 +37,13 @@ public class UserManager {
         } else {
             return false;
         }
+    }
+
+    public Map<String, Boolean> getBadges() {
+        return curUser.get_badges();
+    }
+
+    public void setBadge(String key) {
+        curUser.set_badge(key);
     }
 }

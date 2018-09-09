@@ -12,7 +12,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:id="@+id/profLin"
@@ -109,7 +110,7 @@
                     android:id="@+id/hoReBro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/bronze"
+                    android:src="@drawable/bronzelock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -131,7 +132,7 @@
                     android:id="@+id/hoReSil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/silver"
+                    android:src="@drawable/silverlock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -153,7 +154,7 @@
                     android:id="@+id/hoReGol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/gold"
+                    android:src="@drawable/goldlock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -195,7 +196,7 @@
                     android:id="@+id/DIYBro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/bronze"
+                    android:src="@drawable/bronzelock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -217,7 +218,7 @@
                     android:id="@+id/DIYSil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/silver"
+                    android:src="@drawable/silverlock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -239,7 +240,7 @@
                     android:id="@+id/DIYGol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/gold"
+                    android:src="@drawable/goldlock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -281,7 +282,7 @@
                     android:id="@+id/LawnBro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/bronze"
+                    android:src="@drawable/bronzelock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -303,7 +304,7 @@
                     android:id="@+id/LawnSil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/silver"
+                    android:src="@drawable/silverlock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -325,7 +326,7 @@
                     android:id="@+id/LawnGol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/gold"
+                    android:src="@drawable/goldlock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -367,7 +368,7 @@
                     android:id="@+id/HoMaBro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/bronze"
+                    android:src="@drawable/bronzelock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -389,7 +390,7 @@
                     android:id="@+id/HoMaSil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/silver"
+                    android:src="@drawable/silverlock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -411,7 +412,7 @@
                     android:id="@+id/HoMaGol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/gold"
+                    android:src="@drawable/goldlock"
                     android:layout_gravity="center"/>
 
                 <TextView
@@ -423,5 +424,17 @@
             </LinearLayout>
         </LinearLayout>
 
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
