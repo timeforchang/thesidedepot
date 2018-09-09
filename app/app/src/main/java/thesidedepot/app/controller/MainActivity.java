@@ -299,10 +299,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) { //Calendar
-            new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
-            Intent intent = new Intent(MainActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+//            new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
+//            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            }
         } else if (id == R.id.nav_slideshow) { //Project Areas
             new updateUser().execute("https://sidedepot.herokuapp.com/users/" + currentUser);
             Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
